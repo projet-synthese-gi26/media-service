@@ -1,0 +1,9 @@
+build:
+  stage: build
+  tags: [yowyob-cmd]
+  script:
+    - mvn $MAVEN_CLI_OPTS compile
+  artifacts:
+    paths:
+      - "${TARGET_DIR}/${JAR_FILE}"
+    expire_in: 1 week

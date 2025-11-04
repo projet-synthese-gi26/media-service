@@ -1,0 +1,18 @@
+services:
+  media-service:
+    image: yowyob/media-service
+    container_name: yowyob-media-service
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    environment:
+      - CONFIG_SERVER_URL=${CONFIG_SERVER_URL}
+    ports:
+      - 8086:8080
+    networks:
+      - openia-main-network
+
+# NETWORKS ------------------------------------------------------------------------
+networks:
+  openia-main-network:
+    external: true

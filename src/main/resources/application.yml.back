@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: media-service
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:development}
+  main:
+    web-application-type: reactive
+
+logging:
+  level:
+    org.springframework: error
+    org.springframework.security: debug
+    com.yowyob.identity: DEBUG
+
+api:
+  version: v1
+  context: /api/${api.version}

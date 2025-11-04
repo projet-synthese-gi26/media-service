@@ -1,0 +1,17 @@
+services:
+  # SERVER: CONFIG SERVER -----------------------------------------------------------
+  media-service:
+    image: ${IMAGE_TAG}
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+    ports:
+      - target: 8080
+        published: ${MEDIA_SERVICE_PORT}
+        protocol: tcp
+        mode: host
+    networks:
+      - openia-main-network
+
+networks:
+  openia-main-network:
+    external: true

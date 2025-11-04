@@ -1,0 +1,35 @@
+spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:development}
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    config:
+      name: media-service
+      label: master
+      uri: ${CONFIG_SERVER_URL}
+  r2dbc:
+    base-repository: inc.yowyob.service.media.infrastructure.persistence.repositories
+  security:
+    config: 
+      bearer: true
+      openid-discovery: true
+  error:
+    include-binding-errors: always
+    include-exception: false
+    include-message: never
+    include-stacktrace: never
+    whitelabel:
+      enabled: false
+
+  logging:
+    level.org.springframework.security: DEBUG
+    level.org.springframework.web.reactive: DEBUG
+    level.org.springdoc: DEBUG
+
+seeders:
+  defaults:
+    order:
+  tenant:
+    order:
+
