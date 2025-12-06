@@ -5,17 +5,19 @@ import inc.yowyob.service.media.infrastructure.config.DatabaseConfig;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @Table(DatabaseConfig.MEDIA_TABLE)
-public class Media extends Entity {
+public class Media extends Entity  {
     @Id
     @Column("id")
     private UUID id;

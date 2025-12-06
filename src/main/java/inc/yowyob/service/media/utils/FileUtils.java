@@ -1,5 +1,6 @@
 package inc.yowyob.service.media.utils;
 
+import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.multipart.FilePart;
 import reactor.core.publisher.Mono;
@@ -48,12 +49,13 @@ public class FileUtils {
     }
 
     public static Mono<byte[]> convert(FilePart filePart) {
-        return filePart.content().reduce(new byte[0], (acc, dataBuffer) -> {
-            byte[] newAcc = new byte[acc.length + dataBuffer.readableByteCount()];
-            System.arraycopy(acc, 0, newAcc, 0, acc.length);
-            dataBuffer.read(newAcc);
-            return newAcc;
-        });
+        return DataBufferUtils.join(filePart.content())
+                .map(dataBuffer -> {
+                    byte[] bytes = new byte[dataBuffer.readableByteCount()];
+                    dataBuffer.read(bytes);
+                    DataBufferUtils.release(dataBuffer);
+                    return bytes;
+                });
     }
 
     public static String sanitizeService(String service) {

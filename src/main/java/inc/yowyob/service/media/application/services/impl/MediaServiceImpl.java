@@ -33,10 +33,13 @@ public class MediaServiceImpl implements MediaService {
         String realFileName = filePart.filename();
         String fileName = FileUtils.generateHashedFileName(realFileName);
         String extension = FileUtils.getExtension(fileName);
-        Path source = Path.of(location, fileName);
+
+
+        String normalizedLocation = location.replace("\\", "/");
+        String objectKey = Path.of(normalizedLocation, fileName).toString().replace("\\", "/");
         String realService = FileUtils.sanitizeService(service);
 
-        return minioService.upload(source, realService, filePart).flatMap(objectKey -> {
+        return minioService.upload(Path.of(objectKey), realService, filePart).flatMap(uploadedPath -> {
             Media media = new Media();
             media.setService(realService);
             media.setName(fileName);
@@ -44,10 +47,12 @@ public class MediaServiceImpl implements MediaService {
             media.setSize(filePart.headers().getContentLength());
             media.setMime(FileUtils.getContentType(filePart));
             media.setExtension(extension);
-            media.setPath(objectKey.toString());
-            media.setUri(Path.of(media.getService(), media.getPath()).toString());
+            media.setPath(objectKey);
+            media.setUri(Path.of(media.getService(), objectKey).toString().replace("\\", "/"));
 
-            return mediaRepository.save(media);
+            return mediaRepository.save(media)
+                    .doOnNext(savedMedia ->
+                            log.info("Media saved with ID: {}", savedMedia.getId()));
         });
     }
 
@@ -91,14 +96,18 @@ public class MediaServiceImpl implements MediaService {
     @Override
     public Mono<byte[]> downloadMedia(UUID id) {
         return this.getMediaMetadata(id)
+                .doOnNext(media -> log.info("Downloading media: id={}, path={}, service={}",
+                        id, media.getPath(), media.getService()))
                 .flatMap(media -> minioService.get(Path.of(media.getPath()), media.getService()))
+                .doOnNext(inputStream -> log.info("File found and stream obtained"))
                 .map(inputStream -> {
                     try {
                         return inputStream.readAllBytes();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                });
+                })
+                .doOnError(err -> log.error("Error downloading media: {}", err.getMessage()));
     }
 
     @Override

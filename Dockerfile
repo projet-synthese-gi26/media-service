@@ -1,16 +1,12 @@
-FROM openjdk:21-slim
+FROM maven:3.8.5-openjdk-17-slim AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-ARG JAVA_OPTS
-ARG SPRING_PROFILES_ACTIVE=development
-ARG SERVICE_VERSION=1.0.0
-
-ENV SERVICE_VERSION=$SERVICE_VERSION
-ENV JAVA_OPTS=$JAVA_OPTS
-ENV SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
-ENV SERVICE_NAME=media-service
-
-ADD target/$SERVICE_NAME-$SERVICE_VERSION.jar $SERVICE_NAME.jar
-
+FROM maven:3.8.5-openjdk-17-slim
+WORKDIR /app
+COPY --from=build /app/target/*.jar media-service.jar
+ENV SPRING_PROFILES_ACTIVE=development
 EXPOSE 8081
-
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -DSPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE -jar $SERVICE_NAME.jar"]
+ENTRYPOINT ["sh", "-c", "java -Dspring.profiles.active=$SPRING_PROFILES_ACTIVE -jar media-service.jar"]

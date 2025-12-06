@@ -10,23 +10,20 @@ import java.util.UUID;
 @Data
 public abstract class Entity {
 
-
-    @CreatedDate
+    @ReadOnlyProperty
     @Column("created_at")
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
+    @ReadOnlyProperty
     @Column("updated_at")
     private LocalDateTime updatedAt;
 
     @Column("deleted_at")
     private LocalDateTime deletedAt;
 
-    @CreatedBy
     @Column("created_by")
     private UUID createdBy;
 
-    @LastModifiedBy
     @Column("updated_by")
     private UUID updatedBy;
 

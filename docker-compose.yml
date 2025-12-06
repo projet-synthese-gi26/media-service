@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+
+  media-service:
+    build: .
+    container_name: media-service-app
+    ports:
+      - "8081:8081"
+    environment:
+
+      - SERVER_PORT=8081
+      - SPRING_PROFILES_ACTIVE=development
+      - EUREKA_CLIENT_ENABLED=false
+
+
+      - SPRING_R2DBC_URL=r2dbc:postgresql://postgres:5432/media_db
+      - SPRING_R2DBC_USERNAME=postgres
+      - SPRING_R2DBC_PASSWORD=password
+      - SPRING_R2DBC_POOL_ENABLED=true
+
+
+      - DB_URL=jdbc:postgresql://postgres:5432/media_db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=password
+
+
+      - SPRING_MINIO_URL=http://minio:9000
+      - SPRING_MINIO_ACCESS_KEY=minioadmin
+      - SPRING_MINIO_SECRET_KEY=minioadmin
+      - SPRING_MINIO_BUCKET=media
+      - SPRING_MINIO_CHECK_BUCKET=true
+      - SPRING_MINIO_CREATE_BUCKET=true
+
+    depends_on:
+      - postgres
+      - minio
+
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: media_db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - minio-data:/data
+    command: server /data --console-address ":9001"
+
+
+
+
+volumes:
+  postgres-data:
+  minio-data:
