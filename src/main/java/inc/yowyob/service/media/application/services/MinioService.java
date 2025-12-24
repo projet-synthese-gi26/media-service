@@ -3,21 +3,27 @@ package inc.yowyob.service.media.application.services;
 import inc.yowyob.service.media.api.exceptions.MinioException;
 import io.minio.ObjectWriteResponse;
 import io.minio.StatObjectResponse;
+import io.minio.errors.InsufficientDataException;
+import io.minio.errors.InternalException;
+import io.minio.errors.XmlParserException;
 import io.minio.messages.Item;
 import org.springframework.http.codec.multipart.FilePart;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 public interface MinioService {
 
     public Mono<Boolean> isBucketExist(String bucket);
 
-    public Mono<Void> createBucket(String bucket);
+    public Mono<Void> createBucket(String bucket) throws InsufficientDataException, IOException, NoSuchAlgorithmException, InvalidKeyException, XmlParserException, InternalException;
 
     /**
      * List all objects at root of the bucket

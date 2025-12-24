@@ -64,7 +64,12 @@ public class MinioServiceImpl implements MinioService {
             if (!isBucketExist && !createIfNotExists) {
                 return Mono.error(new BucketNotFoundException(bucket));
             } else if (!isBucketExist) {
-                return createBucket(bucket).thenReturn(true);
+                try {
+                    return createBucket(bucket).thenReturn(true);
+                } catch (InsufficientDataException | NoSuchAlgorithmException | InvalidKeyException |
+                         XmlParserException | InternalException | IOException e) {
+                    return Mono.error(new RuntimeException(e));
+                }
             }
             return Mono.just(true);
         });
@@ -100,14 +105,19 @@ public class MinioServiceImpl implements MinioService {
     }
 
     @Override
-    public Mono<Void> createBucket(String bucket) {
-        try {
-            return Mono.fromFuture(
-                    minioAsyncClient.makeBucket(this.makeBucketArgs(bucket))
-            );
-        } catch (Exception e) {
+    public Mono<Void> createBucket(String bucket) throws InsufficientDataException, IOException, NoSuchAlgorithmException, InvalidKeyException, XmlParserException, InternalException {
+        return Mono.fromFuture(
+                minioAsyncClient.makeBucket(this.makeBucketArgs(bucket))
+        ).onErrorResume(e -> {
+
+            if (e.getCause() instanceof ErrorResponseException minioEx) {
+                String code = minioEx.errorResponse().code();
+                if ("BucketAlreadyOwnedByYou".equals(code) || "BucketAlreadyExists".equals(code)) {
+                    return Mono.empty();
+                }
+            }
             return Mono.error(e);
-        }
+        }).then();
     }
 
     @Override
