@@ -40,13 +40,14 @@ public class UploadController {
     }
 
     @PostMapping(value = "/upload-multiple", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Flux<ResponseEntity<MediaDto>> uploadMultiple(
-            @RequestPart("files") Flux<FilePart> files,
-            @RequestPart("service") String service,
-            @RequestPart(value = "location") String location) {
-        return mediaService.uploadMultipleMedia(files, service, location)
-                .map(mediaMapper::toDto)
-                .map(ResponseEntity::ok);
+    public Mono<ResponseEntity<Flux<MediaDto>>> uploadMultiple(
+                                                                @RequestPart("files") Flux<FilePart> files,
+                                                                @RequestPart("service") String service,
+                                                                @RequestPart(value = "location") String location) {
+
+        Flux<MediaDto> mediaDtoFlux = mediaService.uploadMultipleMedia(files, service, location)
+                .map(mediaMapper::toDto);
+        return Mono.just(ResponseEntity.ok(mediaDtoFlux));
     }
 
     @PutMapping("/{id}")
