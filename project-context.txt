@@ -1,0 +1,3872 @@
+
+================================================================================
+CONTEXTE DU PROJET
+================================================================================
+Projet: media-service-master
+Date de génération: 2026-01-16T04:41:56.637Z
+Chemin: D:\Projets\Scolaire\Reseau\API du Prof\media-service-master
+
+
+================================================================================
+STRUCTURE DU PROJET
+================================================================================
+
+media-service-master/
+├── .gitignore
+├── .gitlab-ci.yml
+├── docker/
+│   ├── docker-compose-stack.yml
+│   ├── docker-compose.yml
+│   └── Dockerfile
+├── docker-compose.yml
+├── Dockerfile
+├── generate.js
+├── gitlab-ci/
+│   ├── build.gitlab-ci.yml
+│   ├── ci_settings.xml
+│   ├── deploy.gitlab-ci.yml
+│   ├── docker-build.gitlab-ci.yml
+│   ├── general.gitlab-ci.yml
+│   └── package.gitlab-ci.yml
+├── pom.xml
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── inc/
+│       │       └── yowyob/
+│       │           └── service/
+│       │               └── media/
+│       │                   ├── api/
+│       │                   │   ├── controller/
+│       │                   │   │   ├── DeleteController.java
+│       │                   │   │   ├── DownloadController.java
+│       │                   │   │   ├── FaviconController.java
+│       │                   │   │   ├── MediaController.java
+│       │                   │   │   └── UploadController.java
+│       │                   │   ├── dto/
+│       │                   │   │   ├── FileInfo.java
+│       │                   │   │   └── media/
+│       │                   │   │       ├── EntityDto.java
+│       │                   │   │       └── MediaDto.java
+│       │                   │   ├── exceptions/
+│       │                   │   │   ├── BucketNotFoundException.java
+│       │                   │   │   ├── FileNotFoundException.java
+│       │                   │   │   ├── GlobalExceptionHandler.java
+│       │                   │   │   ├── MediaTypeNotFoundException.java
+│       │                   │   │   ├── MinioException.java
+│       │                   │   │   ├── MinioFetchException.java
+│       │                   │   │   ├── NoExtensionException.java
+│       │                   │   │   ├── NoNameException.java
+│       │                   │   │   └── ServiceTypeNotFoundException.java
+│       │                   │   └── mappers/
+│       │                   │       ├── BaseMapper.java
+│       │                   │       └── MediaMapper.java
+│       │                   ├── application/
+│       │                   │   ├── enums/
+│       │                   │   │   └── MediaType.java
+│       │                   │   ├── models/
+│       │                   │   │   └── MinioHealthIndicator.java
+│       │                   │   └── services/
+│       │                   │       ├── impl/
+│       │                   │       │   ├── MediaServiceImpl.java
+│       │                   │       │   └── MinioServiceImpl.java
+│       │                   │       ├── MediaService.java
+│       │                   │       └── MinioService.java
+│       │                   ├── Application.java
+│       │                   ├── infrastructure/
+│       │                   │   ├── config/
+│       │                   │   │   ├── DatabaseConfig.java
+│       │                   │   │   ├── DataSourceConfig.java
+│       │                   │   │   ├── MinioAsyncConfiguration.java
+│       │                   │   │   ├── MinioConfiguration.java
+│       │                   │   │   ├── MinioMetricConfiguration.java
+│       │                   │   │   ├── MinioNotificationConfiguration.java
+│       │                   │   │   ├── R2dbcConfiguration.java
+│       │                   │   │   ├── SecurityConfig.java
+│       │                   │   │   ├── SpringSecurityAuditorAware.java
+│       │                   │   │   └── WebFluxConfig.java
+│       │                   │   ├── converters/
+│       │                   │   │   └── StringToMediaTypeConverter.java
+│       │                   │   ├── notification/
+│       │                   │   │   └── MinioNotification.java
+│       │                   │   ├── persistence/
+│       │                   │   │   ├── callback/
+│       │                   │   │   │   └── MediaCallback.java
+│       │                   │   │   ├── entities/
+│       │                   │   │   │   ├── Entity.java
+│       │                   │   │   │   └── Media.java
+│       │                   │   │   └── repositories/
+│       │                   │   │       └── MediaRepository.java
+│       │                   │   └── properties/
+│       │                   │       ├── MinioConfigurationProperties.java
+│       │                   │       └── R2dbcProperties.java
+│       │                   └── utils/
+│       │                       ├── ApiResponse.java
+│       │                       ├── FileTypeUtils.java
+│       │                       ├── FileUtils.java
+│       │                       └── HttpResponse.java
+│       └── resources/
+│           ├── application-development.yml.back
+│           ├── application.properties
+│           ├── application.yml.back
+│           ├── bootstrap.yml.back
+│           ├── db/
+│           │   └── migrations/
+│           │       └── default/
+│           │           ├── master.xml
+│           │           └── V1__2025_10_10_0001_create_media_table.xml
+│           └── static/
+│               └── favicon.ico
+
+================================================================================
+CONTENU DES FICHIERS
+================================================================================
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: .gitignore
+TAILLE: 490 B
+────────────────────────────────────────────────────────────────────────────────
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### IntelliJ IDEA ###
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+*.iws
+*.iml
+*.ipr
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: .gitlab-ci.yml
+TAILLE: 285 B
+────────────────────────────────────────────────────────────────────────────────
+include:
+  - local: "/gitlab-ci/general.gitlab-ci.yml"
+  #- local: "/gitlab-ci/test.gitlab-ci.yml"
+  - local: "/gitlab-ci/build.gitlab-ci.yml"
+  - local: "/gitlab-ci/docker-build.gitlab-ci.yml"
+  - local: "/gitlab-ci/package.gitlab-ci.yml"
+  - local: "/gitlab-ci/deploy.gitlab-ci.yml"
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: docker\docker-compose-stack.yml
+TAILLE: 420 B
+────────────────────────────────────────────────────────────────────────────────
+services:
+  # SERVER: CONFIG SERVER -----------------------------------------------------------
+  media-service:
+    image: ${IMAGE_TAG}
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+    ports:
+      - target: 8080
+        published: ${MEDIA_SERVICE_PORT}
+        protocol: tcp
+        mode: host
+    networks:
+      - openia-main-network
+
+networks:
+  openia-main-network:
+    external: true
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: docker\docker-compose.yml
+TAILLE: 437 B
+────────────────────────────────────────────────────────────────────────────────
+services:
+  media-service:
+    image: yowyob/media-service
+    container_name: yowyob-media-service
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    environment:
+      - CONFIG_SERVER_URL=${CONFIG_SERVER_URL}
+    ports:
+      - 8086:8080
+    networks:
+      - openia-main-network
+
+# NETWORKS ------------------------------------------------------------------------
+networks:
+  openia-main-network:
+    external: true
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: docker-compose.yml
+TAILLE: 1.48 KB
+────────────────────────────────────────────────────────────────────────────────
+version: '3.8'
+
+services:
+
+  media-service:
+    build: .
+    container_name: media-service-app
+    ports:
+      - "8081:8081"
+    environment:
+
+      - SERVER_PORT=8081
+      - SPRING_PROFILES_ACTIVE=development
+      - EUREKA_CLIENT_ENABLED=false
+
+
+      - SPRING_R2DBC_URL=r2dbc:postgresql://postgres:5432/media_db
+      - SPRING_R2DBC_USERNAME=postgres
+      - SPRING_R2DBC_PASSWORD=password
+      - SPRING_R2DBC_POOL_ENABLED=true
+
+
+      - DB_URL=jdbc:postgresql://postgres:5432/media_db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=password
+
+
+      - SPRING_MINIO_URL=http://minio:9000
+      - SPRING_MINIO_ACCESS_KEY=minioadmin
+      - SPRING_MINIO_SECRET_KEY=minioadmin
+      - SPRING_MINIO_BUCKET=media
+      - SPRING_MINIO_CHECK_BUCKET=true
+      - SPRING_MINIO_CREATE_BUCKET=true
+
+    depends_on:
+      - postgres
+      - minio
+
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    ports:
+      - "5432:5435"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: media_db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - minio-data:/data
+    command: server /data --console-address ":9001"
+
+
+
+
+volumes:
+  postgres-data:
+  minio-data:
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: gitlab-ci\build.gitlab-ci.yml
+TAILLE: 168 B
+────────────────────────────────────────────────────────────────────────────────
+build:
+  stage: build
+  tags: [yowyob-cmd]
+  script:
+    - mvn $MAVEN_CLI_OPTS compile
+  artifacts:
+    paths:
+      - "${TARGET_DIR}/${JAR_FILE}"
+    expire_in: 1 week
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: gitlab-ci\ci_settings.xml
+TAILLE: 843 B
+────────────────────────────────────────────────────────────────────────────────
+<settings xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd">
+  <servers>
+    <server>
+      <id>gitlab-maven</id>
+      <username>${CI_INC_GROUP_DEPLOY_USER}</username>
+      <password>${CI_INC_GROUP_DEPLOY_TOKEN}</password>
+      <configuration>
+        <authenticationInfo>
+          <userName>${CI_INC_GROUP_DEPLOY_USER}</userName>
+          <password>${CI_INC_GROUP_DEPLOY_TOKEN}</password>
+        </authenticationInfo>
+        <httpHeaders>
+          <property>
+            <name>${CI_INC_GROUP_DEPLOY_USER}</name>
+            <value>${CI_INC_GROUP_DEPLOY_TOKEN}</value>
+          </property>
+        </httpHeaders>
+      </configuration>
+    </server>
+  </servers>
+</settings>
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: gitlab-ci\deploy.gitlab-ci.yml
+TAILLE: 524 B
+────────────────────────────────────────────────────────────────────────────────
+deploy:
+  stage: deploy
+  tags: [yowyob-cmd]
+  dependencies:
+    - docker-build
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login "$CI_REGISTRY" -u "$CI_REGISTRY_USER" --password-stdin
+  script:
+    - docker pull "$IMAGE_TAG" || true
+    - docker stack deploy -c docker/docker-compose-stack.yml "$SERVICE_STACK_NAME" --with-registry-auth
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+      variables:
+        DEPLOYMENT_ENVIRONMENT: "production"
+        ENVIRONMENT: "production"
+    - when: always
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: gitlab-ci\docker-build.gitlab-ci.yml
+TAILLE: 712 B
+────────────────────────────────────────────────────────────────────────────────
+docker-build:
+  stage: docker-build
+  tags: [yowyob-cmd]
+  dependencies:
+    - package
+  script:
+    - echo "Deploying to $SPRING_PROFILES_ACTIVE environment..."
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u "$CI_REGISTRY_USER" --password-stdin
+    - docker rmi "$IMAGE_TAG" || true
+    - >-
+      docker buildx build .
+      --file docker/Dockerfile
+      --no-cache
+      --build-arg JAVA_OPTS="$JAVA_OPTS"
+      --build-arg SPRING_PROFILES_ACTIVE="$SPRING_PROFILES_ACTIVE"
+      --tag $IMAGE_TAG
+      --push
+    - docker image prune --force
+    - echo "Deployment complete"
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+      variables:
+        SPRING_PROFILES_ACTIVE: "production"
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: gitlab-ci\general.gitlab-ci.yml
+TAILLE: 800 B
+────────────────────────────────────────────────────────────────────────────────
+variables:
+  ENV_NAME: $CI_COMMIT_BRANCH
+  GIT_STRATEGY: clone
+  GIT_SUBMODULE_STRATEGY: recursive
+  SPRING_PROFILES_ACTIVE: production
+  MAVEN_OPTS: >-
+    -Dmaven.repo.local=.m2/repository
+  MAVEN_CLI_OPTS: >-
+    -DskipTests
+    -s gitlab-ci/ci_settings.xml
+
+before_script:
+  - |
+    echo "Attempting to remove packages with groupId $REMOVE_GROUP_ID from Maven cache"
+    if [ -d ".m2/repository/${REMOVE_GROUP_ID//./\/}" ]; then
+      find .m2/repository/${REMOVE_GROUP_ID//./\/} -type d -exec rm -rf {} + 2>/dev/null || true
+      echo "Packages removed successfully"
+    else
+      echo "Directory .m2/repository/${REMOVE_GROUP_ID//./\/} not found. Nothing to remove."
+    fi
+ 
+
+image: maven:latest
+cache:
+  paths:
+    - .m2/repository
+
+stages:
+  - build
+  - package
+  - docker-build
+  - deploy
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: gitlab-ci\package.gitlab-ci.yml
+TAILLE: 272 B
+────────────────────────────────────────────────────────────────────────────────
+package:
+  stage: package
+  tags: [yowyob-cmd]
+  dependencies:
+    - build
+  script:
+    - mvn $MAVEN_CLI_OPTS clean compile install
+    - mvn $MAVEN_CLI_OPTS deploy -DretryFailedDeploymentCount=3
+  artifacts:
+    paths:
+      - target/*.jar
+  only:
+    - master
+    - dev
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: pom.xml
+TAILLE: 5.37 KB
+────────────────────────────────────────────────────────────────────────────────
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.5</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>inc.yowyob.service</groupId>
+    <artifactId>media</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>media-service</name>
+    <description>media-service</description>
+
+    <properties>
+        <java.version>17</java.version>
+        <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+        <minio.version>8.5.10</minio.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-r2dbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+
+        <!-- Dépendances tierces -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>r2dbc-postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>${minio.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+
+        <!-- Dépendances de Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${org.mapstruct.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>0.2.0</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\controller\DeleteController.java
+TAILLE: 1.13 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.controller;
+
+import inc.yowyob.service.media.application.services.MediaService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
+
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/media")
+@RequiredArgsConstructor
+@Slf4j
+public class DeleteController {
+
+    private final MediaService mediaService;
+
+    @DeleteMapping("/{id}")
+    public Mono<ResponseEntity<Void>> delete(@PathVariable UUID id) {
+        return mediaService.deleteMedia(id)
+                .then(Mono.just(ResponseEntity.ok().build()));
+    }
+
+    @DeleteMapping("/path/{*path}")
+    public Mono<ResponseEntity<Void>> deleteByPath(@PathVariable String path) {
+        return mediaService.deleteMediaByPath(path)
+                .then(Mono.just(ResponseEntity.ok().build()));
+    }
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\controller\DownloadController.java
+TAILLE: 2.12 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.controller;
+
+import inc.yowyob.service.media.application.services.MediaService;
+import io.swagger.v3.oas.annotations.Parameter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DefaultDataBufferFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.net.URI;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/media")
+@RequiredArgsConstructor
+@Slf4j
+public class DownloadController {
+
+    private final MediaService mediaService;
+
+    @GetMapping("/{id}")
+    public Mono<ResponseEntity<Flux<DataBuffer>>> download(@PathVariable UUID id) {
+        return mediaService.getMediaMetadata(id)
+                .flatMap(media -> mediaService.downloadMedia(id)
+                        .map(bytes -> {
+                            Flux<DataBuffer> dataBufferFlux = Flux.just(new DefaultDataBufferFactory().wrap(bytes));
+                            return ResponseEntity.ok()
+                                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + media.getName() + "\"")
+                                    .contentType(MediaType.parseMediaType(media.getMime()))
+                                    .body(dataBufferFlux);
+                        })
+                )
+                .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
+    }
+
+    @GetMapping("/proxy/{id}")
+    public Mono<Void> proxyMedia(@PathVariable UUID id, @Parameter(hidden = true) ServerWebExchange exchange) {
+        return mediaService.getMediaUrl(id, 3600).flatMap(url -> Mono.fromRunnable(() -> {
+            exchange.getResponse().setStatusCode(HttpStatus.FOUND);
+            exchange.getResponse().getHeaders().setLocation(URI.create(url));
+        }));
+    }
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\controller\FaviconController.java
+TAILLE: 577 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.controller;
+
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class FaviconController {
+
+    @RequestMapping("favicon.ico")
+    public ResponseEntity<?> favicon() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ClassPathResource("static/favicon.ico"));
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\controller\MediaController.java
+TAILLE: 1.32 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.controller;
+
+import inc.yowyob.service.media.api.dto.media.MediaDto;
+import inc.yowyob.service.media.api.mappers.MediaMapper;
+import inc.yowyob.service.media.application.services.MediaService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/media/infos")
+@RequiredArgsConstructor
+@Slf4j
+public class MediaController {
+
+    private final MediaService mediaService;
+
+    private final MediaMapper mediaMapper;
+
+    @GetMapping("/list")
+    public Flux<MediaDto> list(@RequestParam String service) {
+        return mediaService.listMedia(service).map(mediaMapper::toDto);
+    }
+
+    @GetMapping("/metadata/{id}")
+    public Mono<ResponseEntity<MediaDto>> getMetadata(@PathVariable UUID id) {
+        return mediaService.getMediaMetadata(id)
+                .map(mediaMapper::toDto)
+                .map(ResponseEntity::ok);
+    }
+
+    @GetMapping("/search")
+    public Flux<MediaDto> search(@RequestParam String name, @RequestParam String service) {
+        return mediaService.searchMediaByName(service, name)
+                .map(mediaMapper::toDto);
+    }
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\controller\UploadController.java
+TAILLE: 2.38 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.controller;
+
+import inc.yowyob.service.media.api.dto.media.MediaDto;
+import inc.yowyob.service.media.api.mappers.MediaMapper;
+import inc.yowyob.service.media.application.services.MediaService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.codec.multipart.FilePart;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/media")
+@RequiredArgsConstructor
+@Slf4j
+public class UploadController {
+
+    private final MediaService mediaService;
+
+    private final MediaMapper mediaMapper;
+
+    /*@Value("${app.gateway-service}/${spring.application.name}/media/")
+    private String mediaScheme;*/
+
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Mono<ResponseEntity<MediaDto>> upload(
+            @RequestPart("file") FilePart file,
+            @RequestPart("service") String service,
+            @RequestPart(value = "location") String location) {
+        return mediaService.uploadMedia(file, service, location)
+                .map(mediaMapper::toDto)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.badRequest().build());
+    }
+
+    @PostMapping(value = "/upload-multiple", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Flux<ResponseEntity<MediaDto>> uploadMultiple(
+            @RequestPart("files") Flux<FilePart> files,
+            @RequestPart("service") String service,
+            @RequestPart(value = "location") String location) {
+        return mediaService.uploadMultipleMedia(files, service, location)
+                .map(mediaMapper::toDto)
+                .map(ResponseEntity::ok);
+    }
+
+    @PutMapping("/{id}")
+    public Mono<ResponseEntity<MediaDto>> replace(
+            @PathVariable UUID id,
+            @RequestPart("file") FilePart file,
+            @RequestPart(value = "location", required = false) String location) {
+        return mediaService.replaceMedia(id, file, location)
+                .map(mediaMapper::toDto)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\dto\FileInfo.java
+TAILLE: 463 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.dto;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.time.Instant;
+
+public class FileInfo {
+    @JsonProperty(value = "original_file_name")
+    private String originalFileName;
+
+    @JsonProperty(value = "dfs_file_name")
+    private String dfsFileName;
+
+    @JsonProperty(value = "dfs_bucket")
+    private String dfsBucket;
+
+    @JsonProperty(value = "original_file_name")
+    private Instant createdAt;
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\dto\media\EntityDto.java
+TAILLE: 520 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.dto.media;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+/**
+ * Classe de base pour les DTOs représentant une entité.
+ * Elle fournit des champs d'audit communs comme les dates de création et de mise à jour.
+ */
+@Data
+public abstract class EntityDto {
+
+    @JsonProperty("created_at")
+    private LocalDateTime createdAt;
+
+    @JsonProperty("updated_at")
+    private LocalDateTime updatedAt;
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\dto\media\MediaDto.java
+TAILLE: 754 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.dto.media;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.util.UUID;
+
+@Data
+@EqualsAndHashCode(callSuper = false)
+public class MediaDto extends EntityDto {
+    @JsonProperty("id")
+    private UUID id;
+
+    @JsonProperty("service")
+    private String service;
+
+    @JsonProperty("name")
+    private String name;
+
+    @JsonProperty("real_name")
+    private String realName;
+
+    @JsonProperty("size")
+    private Long size;
+
+    @JsonProperty("mime")
+    private String mime;
+
+    @JsonProperty("extension")
+    private String extension;
+
+    @JsonProperty("path")
+    private String path;
+
+    @JsonProperty("uri")
+    private String uri;
+
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\exceptions\BucketNotFoundException.java
+TAILLE: 350 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.exceptions;
+
+
+/**
+ * Runtime exception thrown when an error occur while fetching a list of objects.
+ * @author Jordan LEFEBURE
+ */
+public class BucketNotFoundException extends RuntimeException{
+    public BucketNotFoundException(String name) {
+        super(String.format("Storage %s not found.", name));
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\exceptions\FileNotFoundException.java
+TAILLE: 355 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.exceptions;
+
+
+/**
+ * Runtime exception thrown when an error occur while fetching a list of objects.
+ * @author Jordan LEFEBURE
+ */
+public class FileNotFoundException extends RuntimeException{
+    public FileNotFoundException(String name) {
+        super(String.format("o file was found with name %s.", name));
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\exceptions\GlobalExceptionHandler.java
+TAILLE: 1.90 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.exceptions;
+
+
+//import io.swagger.v3.oas.annotations.Hidden;
+import inc.yowyob.service.media.utils.ApiResponse;
+import inc.yowyob.service.media.utils.HttpResponse;
+import io.swagger.v3.oas.annotations.Hidden;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@Slf4j
+@RestControllerAdvice
+@Hidden
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(FileNotFoundException.class)
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    public ApiResponse<Object> handleFileNotFoundException(FileNotFoundException e) {
+        log.error("FileNotFoundException occurred", e);
+        return HttpResponse.createBadResponse(HttpStatus.NOT_FOUND, e.getMessage());
+    }
+
+    @ExceptionHandler(MinioException.class)
+    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiResponse<Object> handleDfsServerException(MinioException e) {
+        log.error("MinioException occurred", e);
+        return HttpResponse.createBadResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+    }
+
+    @ExceptionHandler(NoExtensionException.class)
+    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiResponse<Object> handleNoExtensionException(NoExtensionException e) {
+        log.error("MinioException occurred", e);
+        return HttpResponse.createBadResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+    }
+
+    @ExceptionHandler(NoNameException.class)
+    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiResponse<Object> handleNoNameException(NoNameException e) {
+        log.error("MinioException occurred", e);
+        return HttpResponse.createBadResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+    }
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\exceptions\MediaTypeNotFoundException.java
+TAILLE: 244 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.exceptions;
+
+public class MediaTypeNotFoundException extends RuntimeException {
+    public MediaTypeNotFoundException(String value) {
+        super(String.format("Media type %s not found.", value));
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\exceptions\MinioException.java
+TAILLE: 344 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.exceptions;
+
+
+/**
+ * Wrapper exception for all Minio errors that occurs while fetching, removing, uploading an object to Minio.
+ * @author Jordan LEFEBURE
+ */
+public class MinioException extends Exception {
+    public MinioException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\exceptions\MinioFetchException.java
+TAILLE: 332 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.exceptions;
+
+
+/**
+ * Runtime exception thrown when an error occur while fetching a list of objects.
+ * @author Jordan LEFEBURE
+ */
+public class MinioFetchException extends RuntimeException{
+    public MinioFetchException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\exceptions\NoExtensionException.java
+TAILLE: 202 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.exceptions;
+
+public class NoExtensionException extends RuntimeException {
+    public NoExtensionException() {
+        super("File must have an extension.");
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\exceptions\NoNameException.java
+TAILLE: 186 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.exceptions;
+
+public class NoNameException extends RuntimeException {
+    public NoNameException() {
+        super("File must have a name.");
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\exceptions\ServiceTypeNotFoundException.java
+TAILLE: 248 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.exceptions;
+
+public class ServiceTypeNotFoundException extends RuntimeException {
+    public ServiceTypeNotFoundException(String value) {
+        super(String.format("Media type %s not found.", value));
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\mappers\BaseMapper.java
+TAILLE: 293 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.mappers;
+
+import java.util.List;
+
+/**
+ * Interface de base pour les mappers.
+ * @param <E> le type de l'entité (Entity)
+ * @param <D> le type du DTO (Data Transfer Object)
+ */
+public interface BaseMapper<E, D> {
+
+    D toDto(E entity);
+
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\api\mappers\MediaMapper.java
+TAILLE: 427 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.api.mappers;
+
+import inc.yowyob.service.media.api.dto.media.MediaDto;
+import inc.yowyob.service.media.infrastructure.persistence.entities.Media;
+
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
+
+/**
+ * @author douglas
+ */
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface MediaMapper extends BaseMapper<Media, MediaDto> {
+
+}
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\application\enums\MediaType.java
+TAILLE: 993 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.application.enums;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import inc.yowyob.service.media.api.exceptions.MediaTypeNotFoundException;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(enumAsRef = true)
+public enum MediaType {
+    PDF("pdf"),
+    FILE("file"),
+    AUDIO("audio"),
+    VIDEO("video"),
+    IMAGE("image"),
+    UNKNOWN("unknown");
+
+    private final String value;
+
+    MediaType(String value) {
+        this.value = value;
+    }
+
+    @JsonValue
+    public String getValue() {
+        return value;
+    }
+
+    @JsonCreator
+    public static MediaType fromValue(String value) {
+        for (MediaType type : MediaType.values()) {
+            if (type.value.equalsIgnoreCase(value)) {
+                return type;
+            }
+        }
+
+        throw new MediaTypeNotFoundException(value);
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\application\models\MinioHealthIndicator.java
+TAILLE: 2.08 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.application.models;
+
+
+import inc.yowyob.service.media.infrastructure.properties.MinioConfigurationProperties;
+import io.minio.BucketExistsArgs;
+import io.minio.MinioClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.web.server.ManagementContextAutoConfiguration;
+import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.actuate.health.HealthIndicator;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.stereotype.Component;
+
+/**
+ * Set the Minio health indicator on Actuator.
+ *
+ * @author Jordan LEFEBURE
+ */
+@ConditionalOnClass(ManagementContextAutoConfiguration.class)
+@Component
+public class MinioHealthIndicator implements HealthIndicator {
+
+    private final MinioClient minioClient;
+    private final MinioConfigurationProperties minioConfigurationProperties;
+
+    @Autowired
+    public MinioHealthIndicator(MinioClient minioClient, MinioConfigurationProperties minioConfigurationProperties) {
+        this.minioClient = minioClient;
+        this.minioConfigurationProperties = minioConfigurationProperties;
+    }
+
+
+    @Override
+    public Health health() {
+        if (minioClient == null) {
+            return Health.down().build();
+        }
+
+        try {
+            BucketExistsArgs args = BucketExistsArgs.builder()
+                    .bucket(minioConfigurationProperties.getBucket())
+                    .build();
+            if (minioClient.bucketExists(args)) {
+                return Health.up()
+                        .withDetail("bucketName", minioConfigurationProperties.getBucket())
+                        .build();
+            } else {
+                return Health.down()
+                        .withDetail("bucketName", minioConfigurationProperties.getBucket())
+                        .build();
+            }
+        } catch (Exception e) {
+            return Health.down(e)
+                    .withDetail("bucketName", minioConfigurationProperties.getBucket())
+                    .build();
+        }
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\application\services\impl\MediaServiceImpl.java
+TAILLE: 6.40 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.application.services.impl;
+
+import inc.yowyob.service.media.api.exceptions.FileNotFoundException;
+import inc.yowyob.service.media.application.services.MediaService;
+import inc.yowyob.service.media.application.services.MinioService;
+import inc.yowyob.service.media.infrastructure.persistence.entities.Media;
+import inc.yowyob.service.media.infrastructure.persistence.repositories.MediaRepository;
+import inc.yowyob.service.media.utils.FileUtils;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.codec.multipart.FilePart;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.util.UUID;
+
+@Service
+@Slf4j
+@RequiredArgsConstructor
+public class MediaServiceImpl implements MediaService {
+
+    private final MinioService minioService;
+
+    private final MediaRepository mediaRepository;
+
+    @Override
+    public Mono<Media> uploadMedia(FilePart filePart, String service, String location) {
+        String realFileName = filePart.filename();
+        String fileName = FileUtils.generateHashedFileName(realFileName);
+        String extension = FileUtils.getExtension(fileName);
+
+
+        String normalizedLocation = location.replace("\\", "/");
+        String objectKey = Path.of(normalizedLocation, fileName).toString().replace("\\", "/");
+        String realService = FileUtils.sanitizeService(service);
+
+        return minioService.upload(Path.of(objectKey), realService, filePart).flatMap(uploadedPath -> {
+            Media media = new Media();
+            media.setService(realService);
+            media.setName(fileName);
+            media.setRealName(realFileName);
+            media.setSize(filePart.headers().getContentLength());
+            media.setMime(FileUtils.getContentType(filePart));
+            media.setExtension(extension);
+            media.setPath(objectKey);
+            media.setUri(Path.of(media.getService(), objectKey).toString().replace("\\", "/"));
+
+            return mediaRepository.save(media)
+                    .doOnNext(savedMedia ->
+                            log.info("Media saved with ID: {}", savedMedia.getId()));
+        });
+    }
+
+    @Override
+    public Flux<Media> uploadMultipleMedia(Flux<FilePart> fileParts, String service, String location) {
+        return fileParts.flatMapSequential(filePart -> uploadMedia(filePart, service, location));
+    }
+
+    @Override
+    public Mono<Media> replaceMedia(UUID id, FilePart filePart, String location) {
+        String realFileName = filePart.filename();
+        String fileName = FileUtils.generateHashedFileName(realFileName);
+        String extension = FileUtils.getExtension(fileName);
+
+        return this.getMediaMetadata(id).flatMap(media -> {
+            String oldPath = media.getPath();
+            Path source = Path.of(Path.of(media.getPath()).getParent().toString(), fileName);
+
+            if (location != null && !location.trim().isEmpty()) {
+                source = Path.of(location, fileName);
+            }
+
+            return minioService.upload(source, media.getService(), filePart).flatMap(objectKey -> {
+                media.setName(fileName);
+                media.setRealName(realFileName);
+                media.setSize(filePart.headers().getContentLength());
+                media.setMime(FileUtils.getContentType(filePart));
+                media.setExtension(extension);
+                media.setPath(objectKey.toString());
+                media.setUri(Path.of(media.getService(), media.getPath()).toString());
+                return mediaRepository.save(media);
+            }).flatMap(newMedia -> {
+                return minioService.remove(Path.of(oldPath), media.getService())
+                        .thenReturn(newMedia)
+                        .onErrorResume(err -> Mono.just(newMedia));
+            });
+        });
+    }
+
+    @SneakyThrows
+    @Override
+    public Mono<byte[]> downloadMedia(UUID id) {
+        return this.getMediaMetadata(id)
+                .doOnNext(media -> log.info("Downloading media: id={}, path={}, service={}",
+                        id, media.getPath(), media.getService()))
+                .flatMap(media -> minioService.get(Path.of(media.getPath()), media.getService()))
+                .doOnNext(inputStream -> log.info("File found and stream obtained"))
+                .map(inputStream -> {
+                    try {
+                        return inputStream.readAllBytes();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .doOnError(err -> log.error("Error downloading media: {}", err.getMessage()));
+    }
+
+    @Override
+    public Mono<String> getMediaUrl(UUID id, int expiryInSeconds) {
+        return this.getMediaMetadata(id).flatMap(media -> {
+            return minioService.generatePresignedUrl(media.getService(), media.getPath(), expiryInSeconds);
+        });
+    }
+
+    @Override
+    public Mono<Media> getMediaMetadata(UUID id) {
+        return mediaRepository.findById(id)
+                .switchIfEmpty(Mono.error(new FileNotFoundException(id.toString())));
+    }
+
+    @Override
+    public Flux<Media> listMedia(String service) {
+        return mediaRepository.findByService(service);
+    }
+
+    @Override
+    public Mono<Void> deleteMedia(UUID id) {
+        return this.getMediaMetadata(id).flatMap(media -> {
+            return mediaRepository.delete(media).doOnTerminate(() -> {
+                minioService.remove(Path.of(media.getPath(), media.getService()));
+            });
+        });
+    }
+
+    @Override
+    public Mono<Void> deleteMediaByPath(String path) {
+        return mediaRepository.findByPath(path).flatMap(media -> {
+            Mono<Void> removeMediaMono = minioService.remove(Path.of(media.getPath(), media.getService())).onErrorResume(err -> {
+                log.error("Minio error", err);
+                return Mono.empty();
+            });
+            return mediaRepository.delete(media).then(removeMediaMono);
+        });
+    }
+
+    @Override
+    public Flux<Media> searchMediaByName(String service, String name) {
+        return mediaRepository.findByServiceAndNameContainingIgnoreCase(service, name);
+    }
+
+    @Override
+    public Mono<Media> findByPath(String service, String path) {
+        return mediaRepository.findByServiceAndPath(service, path);
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\application\services\impl\MinioServiceImpl.java
+TAILLE: 16.01 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.application.services.impl;
+
+
+import inc.yowyob.service.media.api.exceptions.BucketNotFoundException;
+import inc.yowyob.service.media.api.exceptions.MinioException;
+import inc.yowyob.service.media.api.exceptions.MinioFetchException;
+import inc.yowyob.service.media.application.services.MinioService;
+import inc.yowyob.service.media.infrastructure.properties.MinioConfigurationProperties;
+import inc.yowyob.service.media.utils.FileUtils;
+import io.minio.*;
+import io.minio.errors.*;
+import io.minio.http.Method;
+import io.minio.messages.Item;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
+import org.springframework.http.codec.multipart.FilePart;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.AbstractMap;
+import java.util.Collections;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+
+
+@RequiredArgsConstructor
+@Service
+@Slf4j
+public class MinioServiceImpl implements MinioService {
+
+    private final MinioClient minioClient;
+
+    private final MinioAsyncClient minioAsyncClient;
+
+
+    private final MinioConfigurationProperties configurationProperties;
+
+    @Override
+    public Mono<Boolean> isBucketExist(String bucket) {
+        try {
+            return Mono.fromFuture(
+                    minioAsyncClient.bucketExists(this.makeBucketExists(bucket))
+            );
+        } catch (Exception e) {
+            return Mono.error(e);
+        }
+    }
+
+    private Mono<Boolean> requireBucketOrCreate(String bucket, boolean createIfNotExists) {
+        return this.isBucketExist(bucket).flatMap(isBucketExist -> {
+            log.info("------------------------------------- is pucket exsts {}", isBucketExist);
+            if (!isBucketExist && !createIfNotExists) {
+                return Mono.error(new BucketNotFoundException(bucket));
+            } else if (!isBucketExist) {
+                try {
+                    return createBucket(bucket).thenReturn(true);
+                } catch (InsufficientDataException | NoSuchAlgorithmException | InvalidKeyException |
+                         XmlParserException | InternalException | IOException e) {
+                    return Mono.error(new RuntimeException(e));
+                }
+            }
+            return Mono.just(true);
+        });
+    }
+
+    private MakeBucketArgs makeBucketArgs(String bucket) {
+        return MakeBucketArgs.builder().bucket(bucket).build();
+    }
+
+    private BucketExistsArgs makeBucketExists(String bucket) {
+        return BucketExistsArgs.builder().bucket(bucket).build();
+    }
+
+    private PutObjectArgs makePutObjectArgs(String bucket, String source, byte[] bytes, MediaType contentType, Map<String, String> headers) {
+
+        PutObjectArgs.Builder builder = PutObjectArgs.builder().bucket(bucket);
+        builder.object(source);
+        builder.stream(new ByteArrayInputStream(bytes), bytes.length, -1);
+
+        if (headers != null && !headers.isEmpty()) {
+            builder.headers(headers);
+        }
+
+        if (contentType != null) {
+            builder.contentType(contentType.toString());
+        }
+
+        return builder.build();
+    }
+
+    private PutObjectArgs makePutObjectArgs(String bucket, String source, byte[] bytes, MediaType contentType) {
+        return this.makePutObjectArgs(bucket, source, bytes, contentType, null);
+    }
+
+    @Override
+    public Mono<Void> createBucket(String bucket) throws InsufficientDataException, IOException, NoSuchAlgorithmException, InvalidKeyException, XmlParserException, InternalException {
+        return Mono.fromFuture(
+                minioAsyncClient.makeBucket(this.makeBucketArgs(bucket))
+        ).onErrorResume(e -> {
+
+            if (e.getCause() instanceof ErrorResponseException minioEx) {
+                String code = minioEx.errorResponse().code();
+                if ("BucketAlreadyOwnedByYou".equals(code) || "BucketAlreadyExists".equals(code)) {
+                    return Mono.empty();
+                }
+            }
+            return Mono.error(e);
+        }).then();
+    }
+
+    @Override
+    public Flux<Item> list() {
+        return listObjects("", null, false);
+    }
+
+    @Override
+    public Flux<Item> list(String bucket) {
+        return listObjects("", bucket, false);
+    }
+
+    @Override
+    public Flux<Item> fullList() {
+        return listObjects("", null, true);
+    }
+
+    @Override
+    public Flux<Item> fullList(String bucket) {
+        return listObjects("", bucket, true);
+    }
+
+    @Override
+    public Flux<Item> list(Path path) {
+        return listObjects(path.toString(), null, false);
+    }
+
+    @Override
+    public Flux<Item> list(Path path, String bucket) {
+        return listObjects(path.toString(), bucket, false);
+    }
+
+    @Override
+    public Flux<Item> getFullList(Path path) {
+        return listObjects(path.toString(), null, true);
+    }
+
+    @Override
+    public Flux<Item> getFullList(Path path, String bucket) {
+        return listObjects(path.toString(), bucket, true);
+    }
+
+    private Flux<Item> listObjects(String prefix, String bucket, boolean recursive) {
+
+        if (bucket == null || bucket.isBlank()) {
+            bucket = configurationProperties.getBucket();
+        }
+
+        String finalBucket = bucket;
+        return Flux.defer(() -> {
+            ListObjectsArgs args = ListObjectsArgs.builder()
+                    .bucket(finalBucket)
+                    .prefix(prefix)
+                    .recursive(recursive)
+                    .build();
+            Iterable<Result<Item>> results = minioClient.listObjects(args);
+            return Flux.fromIterable(results)
+                    .publishOn(Schedulers.boundedElastic())
+                    .map(result -> {
+                        try {
+                            return result.get();
+                        } catch (Exception e) {
+                            throw new MinioFetchException("Error while parsing list of objects", e);
+                        }
+                    });
+        });
+    }
+
+    @Override
+    public Mono<InputStream> get(Path path) {
+        return this.get(path, configurationProperties.getBucket());
+    }
+
+    @Override
+    public Mono<InputStream> get(Path path, String bucket) {
+        return Mono.fromCallable(() -> {
+                    GetObjectArgs args = GetObjectArgs.builder()
+                            .bucket(bucket)
+                            .object(path.toString())
+                            .build();
+                    return minioClient.getObject(args);
+                })
+                .map(response -> (InputStream) response)  // Cast GetObjectResponse to InputStream
+                .subscribeOn(Schedulers.boundedElastic())  // Run on a bounded elastic thread
+                .onErrorMap(e -> new MinioFetchException("Error while fetching file in Minio", e));
+    }
+
+    @Override
+    public Mono<StatObjectResponse> getMetadata(Path path) {
+        return this.getMetadata(path, configurationProperties.getBucket());
+    }
+
+    @Override
+    public Mono<StatObjectResponse> getMetadata(Path path, String bucket) {
+        return Mono.fromCallable(() -> {
+                    StatObjectArgs args = StatObjectArgs.builder()
+                            .bucket(bucket)
+                            .object(path.toString())
+                            .build();
+                    return minioClient.statObject(args);
+                }).subscribeOn(Schedulers.boundedElastic())
+                .onErrorMap(e -> new MinioFetchException("Error while fetching metadata in Minio", e));
+    }
+
+    @Override
+    public Mono<Map<Path, StatObjectResponse>> getMetadata(Iterable<Path> paths) {
+        return this.getMetadata(paths, configurationProperties.getBucket());
+    }
+
+    @Override
+    public Mono<Map<Path, StatObjectResponse>> getMetadata(Iterable<Path> paths, String bucket) {
+        return Flux.fromIterable(paths)
+                .flatMap(path ->
+                        Mono.fromCallable(() -> {
+                                    StatObjectArgs args = StatObjectArgs.builder()
+                                            .bucket(bucket)
+                                            .object(path.toString())
+                                            .build();
+                                    return new AbstractMap.SimpleEntry<>(path, minioClient.statObject(args));
+                                }).subscribeOn(Schedulers.boundedElastic())
+                                .onErrorMap(e -> new MinioFetchException("Error while fetching metadata in Minio", e))
+                )
+                .collectMap(AbstractMap.SimpleEntry::getKey, AbstractMap.SimpleEntry::getValue);
+    }
+
+    @Override
+    public Mono<Void> getAndSave(Path source, String fileName) {
+        return this.getAndSave(source, configurationProperties.getBucket(), fileName);
+    }
+
+    @Override
+    public Mono<Void> getAndSave(Path source, String bucket, String fileName) {
+        return Mono.fromRunnable(() -> {
+            try {
+                DownloadObjectArgs args = DownloadObjectArgs.builder()
+                        .bucket(bucket)
+                        .object(source.toString())
+                        .filename(fileName)
+                        .build();
+                minioClient.downloadObject(args);
+            } catch (Exception e) {
+                throw new MinioFetchException("Error while downloading object from Minio", e);
+            }
+        }).subscribeOn(Schedulers.boundedElastic()).then();
+    }
+
+    @Override
+    public Mono<Path> upload(Path source, InputStream file, Map<String, String> headers) {
+        return this.upload(source, configurationProperties.getBucket(), file, headers);
+    }
+
+    @Override
+    public Mono<Path> upload(Path source, String bucket, InputStream file, Map<String, String> headers) {
+
+        return requireBucketOrCreate(bucket, true)
+                .flatMap(unused ->
+                        Mono.fromCallable(() -> {
+                                    PutObjectArgs args = PutObjectArgs.builder()
+                                            .bucket(bucket)
+                                            .object(source.toString())
+                                            .stream(file, file.available(), -1)
+                                            .headers(headers)
+                                            .build();
+                                    minioClient.putObject(args);
+                                    return source;
+                                })
+                                .subscribeOn(Schedulers.boundedElastic())
+                );
+
+    }
+
+    private Mono<Path> putObject(PutObjectArgs putObjectArgs, Path source) {
+        try {
+            CompletableFuture<Path> future = minioAsyncClient.putObject(putObjectArgs)
+                    .thenApply(response -> source)
+                    .exceptionally(throwable -> null);
+            return Mono.fromFuture(future);
+        } catch (InsufficientDataException | InternalException | InvalidKeyException | IOException |
+                 NoSuchAlgorithmException | XmlParserException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Mono<Path> upload(Path source, String bucket, FilePart filePart){
+
+        Mono<Path> pathMono =  FileUtils.convert(filePart).flatMap(bytes -> {
+            log.info("-----------------------upload");
+            Map<String, String> headers = filePart.headers().toSingleValueMap();
+            PutObjectArgs putObjectArgs = this.makePutObjectArgs(bucket, source.toString(), bytes, filePart.headers().getContentType(), headers);
+            return this.putObject(putObjectArgs, source);
+        });
+
+        return this.requireBucketOrCreate(bucket, true).then(pathMono);
+    }
+
+    @Override
+    public Mono<Void> upload(Path source, InputStream file) {
+        return upload(source, file, "");
+    }
+
+    @Override
+    public Mono<Void> upload(Path source, String bucket, InputStream file) {
+        return upload(source, bucket, file, "");
+    }
+
+    @Override
+    public Mono<Void> upload(Path source, InputStream file, String contentType, Map<String, String> headers) {
+        return this.upload(source, configurationProperties.getBucket(), file, contentType, headers);
+    }
+
+    @Override
+    public Mono<Void> upload(Path source, String bucket, InputStream file, String contentType, Map<String, String> headers) {
+        return requireBucketOrCreate(bucket, true).flatMap(unused -> Mono.fromRunnable(() -> {
+            try {
+                PutObjectArgs args = PutObjectArgs.builder()
+                        .bucket(bucket)
+                        .object(source.toString())
+                        .stream(file, file.available(), -1)
+                        .headers(headers)
+                        .contentType(contentType)
+                        .build();
+                minioClient.putObject(args);
+            } catch (Exception e) {
+                throw new MinioFetchException("Error while uploading object to Minio", e);
+            }
+        }).subscribeOn(Schedulers.boundedElastic()).then());
+    }
+
+    @Override
+    public Mono<Void> upload(Path source, InputStream file, String contentType) {
+        return upload(source, file, contentType, Collections.emptyMap());
+    }
+
+    @Override
+    public Mono<Void> upload(Path source, String bucket, InputStream file, String contentType) {
+        return upload(source, bucket, file, contentType, Collections.emptyMap());
+    }
+
+    @Override
+    public Mono<Void> upload(Path source, File file) {
+        return this.upload(source, configurationProperties.getBucket(), file);
+    }
+
+    @Override
+    public Mono<Void> upload(Path source, String bucket, File file) {
+        return requireBucketOrCreate(bucket, true).flatMap(unused -> Mono.fromRunnable(() -> {
+            try {
+                UploadObjectArgs args = UploadObjectArgs.builder()
+                        .bucket(bucket)
+                        .object(source.toString())
+                        .filename(file.getAbsolutePath())
+                        .build();
+                minioClient.uploadObject(args);
+            } catch (Exception e) {
+                throw new MinioFetchException("Error while uploading large file to Minio", e);
+            }
+        }).subscribeOn(Schedulers.boundedElastic()).then());
+    }
+
+    @Override
+    public Mono<Void> remove(Path source) {
+        return this.remove(source, configurationProperties.getBucket());
+    }
+
+    @Override
+    public Mono<Void> remove(Path source, String bucket) {
+        return Mono.fromRunnable(() -> {
+            try {
+                RemoveObjectArgs args = RemoveObjectArgs.builder()
+                        .bucket(bucket)
+                        .object(source.toString())
+                        .build();
+                minioClient.removeObject(args);
+            } catch (Exception e) {
+                throw new MinioFetchException("Error while removing file in Minio", e);
+            }
+        }).subscribeOn(Schedulers.boundedElastic()).then();
+    }
+
+    @Override
+    public Mono<String> generatePresignedUrl(String service, String objectKey, int expiryInSeconds) {
+        try {
+            return Mono.just(minioAsyncClient.getPresignedObjectUrl(
+                    GetPresignedObjectUrlArgs.builder()
+                            .method(Method.GET)
+                            .bucket(service)
+                            .object(objectKey)
+                            .expiry(expiryInSeconds)
+                            .build()
+            ));
+        } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidKeyException |
+                 InvalidResponseException | IOException | NoSuchAlgorithmException | XmlParserException |
+                 ServerException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\application\services\MediaService.java
+TAILLE: 2.26 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.application.services;
+
+import inc.yowyob.service.media.infrastructure.persistence.entities.Media;
+import org.springframework.http.codec.multipart.FilePart;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.util.UUID;
+
+public interface MediaService {
+
+    /**
+     * Creates a new Media.
+     *
+     * @param filePart the file
+     * @param service  the Media object to be created
+     * @return the created Media object
+     */
+    public Mono<Media> uploadMedia(FilePart filePart, String service, String location);
+
+    /**
+     * Upload multiple media.
+     *
+     * @param fileParts the file
+     * @param service   the Media object to be created
+     * @return the created Media object
+     */
+    public Flux<Media> uploadMultipleMedia(Flux<FilePart> fileParts, String service, String location);
+
+    /**
+     * Replace media
+     *
+     * @param id       the media id
+     * @param filePart the new media file
+     * @return the created media
+     */
+    public Mono<Media> replaceMedia(UUID id, FilePart filePart, String location);
+
+    /**
+     * Download media
+     *
+     * @param id the media id
+     * @return the media
+     */
+    public Mono<byte[]> downloadMedia(UUID id);
+
+    /**
+     * Get media url for a given ID
+     *
+     * @param id              the media id
+     * @param expiryInSeconds the expiry period
+     * @return the url
+     */
+    public Mono<String> getMediaUrl(UUID id, int expiryInSeconds);
+
+    /**
+     * Retrieves a Media by its ID.
+     *
+     * @param id the ID of the Media to retrieve
+     * @return the found Media object, or null if not found
+     */
+    public Mono<Media> getMediaMetadata(UUID id);
+
+    /**
+     * Retrieves all Medias.
+     *
+     * @return a list of all Media objects
+     */
+    public Flux<Media> listMedia(String service);
+
+    /**
+     * Deletes a Media by its ID.
+     *
+     * @param id the ID of the Media to delete
+     */
+    public Mono<Void> deleteMedia(UUID id);
+
+    /**
+     * Delete media by path
+     *
+     * @param path the media path
+     * @return void
+     */
+    public Mono<Void> deleteMediaByPath(String path);
+
+    public Flux<Media> searchMediaByName(String service, String name);
+
+    public Mono<Media> findByPath(String service, String path);
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\application\services\MinioService.java
+TAILLE: 10.19 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.application.services;
+
+import inc.yowyob.service.media.api.exceptions.MinioException;
+import io.minio.ObjectWriteResponse;
+import io.minio.StatObjectResponse;
+import io.minio.errors.InsufficientDataException;
+import io.minio.errors.InternalException;
+import io.minio.errors.XmlParserException;
+import io.minio.messages.Item;
+import org.springframework.http.codec.multipart.FilePart;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Map;
+
+public interface MinioService {
+
+    public Mono<Boolean> isBucketExist(String bucket);
+
+    public Mono<Void> createBucket(String bucket) throws InsufficientDataException, IOException, NoSuchAlgorithmException, InvalidKeyException, XmlParserException, InternalException;
+
+    /**
+     * List all objects at root of the bucket
+     *
+     * @return List of items
+     */
+    public Flux<Item> list();
+
+    /**
+     * List all objects at root of the bucket
+     *
+     * @return List of items
+     */
+    public Flux<Item> list(String bucket);
+
+    /**
+     * List all objects at root of the bucket
+     *
+     * @return List of items
+     */
+    public Flux<Item> fullList();
+
+    /**
+     * List all objects at root of the bucket
+     *
+     * @return List of items
+     */
+    public Flux<Item> fullList(String bucket);
+
+    /**
+     * List all objects with the prefix given in parameter for the bucket.
+     * Simulate a folder hierarchy. Objects within folders (i.e. all objects which match the pattern {@code {prefix}/{objectName}/...}) are not returned
+     *
+     * @param path Prefix of seeked list of object
+     * @return List of items
+     */
+    public Flux<Item> list(Path path);
+
+    /**
+     * List all objects with the prefix given in parameter for the bucket.
+     * Simulate a folder hierarchy. Objects within folders (i.e. all objects which match the pattern {@code {prefix}/{objectName}/...}) are not returned
+     *
+     * @param path Prefix of seeked list of object
+     * @return List of items
+     */
+    public Flux<Item> list(Path path, String bucket);
+
+    /**
+     * List all objects with the prefix given in parameter for the bucket
+     * <p>
+     * All objects, even those which are in a folder are returned.
+     *
+     * @param path Prefix of seeked list of object
+     * @return List of items
+     */
+    public Flux<Item> getFullList(Path path);
+
+    /**
+     * List all objects with the prefix given in parameter for the bucket
+     * <p>
+     * All objects, even those which are in a folder are returned.
+     *
+     * @param path Prefix of seeked list of object
+     * @return List of items
+     */
+    public Flux<Item> getFullList(Path path, String bucket);
+
+    /**
+     * Get an object from Minio
+     *
+     * @param path Path with prefix to the object. Object name must be included.
+     * @return The object as an InputStream
+     * @throws MinioException if an error occur while fetch object
+     */
+    public Mono<InputStream> get(Path path) throws MinioException;
+
+    /**
+     * Get an object from Minio
+     *
+     * @param path Path with prefix to the object. Object name must be included.
+     * @return The object as an InputStream
+     */
+    public Mono<InputStream> get(Path path, String bucket);
+
+    /**
+     * Get metadata of an object from Minio
+     *
+     * @param path Path with prefix to the object. Object name must be included.
+     * @return Metadata of the  object
+     * @throws MinioException if an error occur while fetching object metadatas
+     */
+    public Mono<StatObjectResponse> getMetadata(Path path) throws MinioException;
+
+    /**
+     * Get metadata of an object from Minio
+     *
+     * @param path Path with prefix to the object. Object name must be included.
+     * @return Metadata of the  object
+     * @throws MinioException if an error occur while fetching object metadatas
+     */
+    public Mono<StatObjectResponse> getMetadata(Path path, String bucket) throws MinioException;
+
+
+    /**
+     * Get metadata for multiples objects from Minio
+     *
+     * @param paths Paths of all objects with prefix. Objects names must be included.
+     * @return A map where all paths are keys and metadatas are values
+     */
+    public Mono<Map<Path, StatObjectResponse>> getMetadata(Iterable<Path> paths);
+
+    /**
+     * Get metadata for multiples objects from Minio
+     *
+     * @param paths Paths of all objects with prefix. Objects names must be included.
+     * @return A map where all paths are keys and metadatas are values
+     */
+    public Mono<Map<Path, StatObjectResponse>> getMetadata(Iterable<Path> paths, String bucket);
+
+
+    /**
+     * Get a file from Minio, and save it in the {@code fileName} file
+     *
+     * @param source   Path with prefix to the object. Object name must be included.
+     * @param fileName Filename
+     */
+    public Mono<Void> getAndSave(Path source, String fileName);
+
+    /**
+     * Get a file from Minio, and save it in the {@code fileName} file
+     *
+     * @param source   Path with prefix to the object. Object name must be included.
+     * @param fileName Filename
+     */
+    public Mono<Void> getAndSave(Path source, String fileName, String bucket);
+
+    /**
+     * Upload a file to Minio
+     *
+     * @param source  Path with prefix to the object. Object name must be included.
+     * @param file    File as an inputstream
+     * @param headers Additional headers to put on the file. The map MUST be mutable. All custom headers will start with 'x-amz-meta-' prefix when fetched with {@code getMetadata()} method.
+     * @throws MinioException if an error occur while uploading object
+     */
+    public Mono<Path> upload(Path source, InputStream file, Map<String, String> headers) throws MinioException;
+
+    /**
+     * Upload a file to Minio
+     *
+     * @param source  Path with prefix to the object. Object name must be included.
+     * @param file    File as an inputstream
+     * @param headers Additional headers to put on the file. The map MUST be mutable. All custom headers will start with 'x-amz-meta-' prefix when fetched with {@code getMetadata()} method.
+     * @throws MinioException if an error occur while uploading object
+     */
+    public Mono<Path> upload(Path source, String bucket, InputStream file, Map<String, String> headers) throws MinioException;
+
+    public Mono<Path> upload(Path source, String bucket, FilePart filePart);
+
+    /**
+     * Upload a file to Minio
+     *
+     * @param source Path with prefix to the object. Object name must be included.
+     * @param file   File as an inputstream
+     * @throws MinioException if an error occur while uploading object
+     */
+    public Mono<Void> upload(Path source, InputStream file) throws MinioException;
+
+    /**
+     * Upload a file to Minio
+     *
+     * @param source Path with prefix to the object. Object name must be included.
+     * @param file   File as an inputstream
+     * @throws MinioException if an error occur while uploading object
+     */
+    public Mono<Void> upload(Path source, String bucket, InputStream file) throws MinioException;
+
+
+    /**
+     * Upload a file to Minio
+     *
+     * @param source      Path with prefix to the object. Object name must be included.
+     * @param file        File as an inputstream
+     * @param contentType MIME type for the object
+     * @param headers     Additional headers to put on the file. The map MUST be mutable
+     * @throws MinioException if an error occur while uploading object
+     */
+    public Mono<Void> upload(Path source, InputStream file, String contentType, Map<String, String> headers) throws MinioException;
+
+    /**
+     * Upload a file to Minio
+     *
+     * @param source      Path with prefix to the object. Object name must be included.
+     * @param file        File as an inputstream
+     * @param contentType MIME type for the object
+     * @param headers     Additional headers to put on the file. The map MUST be mutable
+     * @throws MinioException if an error occur while uploading object
+     */
+    public Mono<Void> upload(Path source, String bucket, InputStream file, String contentType, Map<String, String> headers) throws MinioException;
+
+    /**
+     * Upload a file to Minio
+     *
+     * @param source      Path with prefix to the object. Object name must be included.
+     * @param file        File as an inputstream
+     * @param contentType MIME type for the object
+     * @throws MinioException if an error occur while uploading object
+     */
+    public Mono<Void> upload(Path source, InputStream file, String contentType) throws MinioException;
+
+    /**
+     * Upload a file to Minio
+     *
+     * @param source      Path with prefix to the object. Object name must be included.
+     * @param file        File as an inputstream
+     * @param contentType MIME type for the object
+     * @throws MinioException if an error occur while uploading object
+     */
+    public Mono<Void> upload(Path source, String bucket, InputStream file, String contentType) throws MinioException;
+
+
+    /**
+     * Upload a file to Minio
+     * upload file bigger than Xmx size
+     *
+     * @param source Path with prefix to the object. Object name must be included.
+     * @param file   File as an Filename
+     * @throws MinioException if an error occur while uploading object
+     */
+    public Mono<Void> upload(Path source, File file) throws MinioException;
+
+    /**
+     * Upload a file to Minio
+     * upload file bigger than Xmx size
+     *
+     * @param source Path with prefix to the object. Object name must be included.
+     * @param file   File as an Filename
+     * @throws MinioException if an error occur while uploading object
+     */
+    public Mono<Void> upload(Path source, String bucket, File file) throws MinioException;
+
+
+    /**
+     * Remove a file to Minio
+     *
+     * @param source Path with prefix to the object. Object name must be included.
+     */
+    public Mono<Void> remove(Path source);
+
+    /**
+     * Remove a file to Minio
+     *
+     * @param source Path with prefix to the object. Object name must be included.
+     */
+    public Mono<Void> remove(Path source, String bucket);
+
+    public Mono<String> generatePresignedUrl(String service, String objectKey, int expiryInSeconds);
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\Application.java
+TAILLE: 1.59 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media;
+
+import inc.yowyob.service.media.infrastructure.properties.MinioConfigurationProperties;
+import inc.yowyob.service.media.infrastructure.properties.R2dbcProperties;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
+import org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.r2dbc.config.EnableR2dbcAuditing;
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.web.reactive.config.EnableWebFlux;
+
+
+/**
+ * Hello world!
+ *
+ */
+@EnableConfigurationProperties(value = {
+        MinioConfigurationProperties.class,
+        R2dbcProperties.class
+})
+@SpringBootApplication(exclude = {
+        RedisAutoConfiguration.class,
+})
+//@EnableAutoConfiguration(exclude = {LiquibaseAutoConfiguration.class})
+@ComponentScan(basePackages = {
+        "inc.yowyob.*",
+})
+
+@EnableWebFlux
+@EnableAsync
+@EnableR2dbcRepositories
+/*@EnableR2dbcAuditing*/
+public class Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\config\DatabaseConfig.java
+TAILLE: 377 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.config;
+
+public class DatabaseConfig {
+
+    public static final String MEDIA_TABLE = "media";
+
+    public static final String MEDIA_BY_BUCKET_TABLE = "media_by_bucket";
+
+    public static final String MEDIA_BY_SERVICE_TABLE = "media_by_service";
+
+    public static final String MEDIA_BY_RESOURCE_TABLE = "media_by_resource";
+
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\config\DataSourceConfig.java
+TAILLE: 570 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.config;
+
+import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class DataSourceConfig {
+
+    @Bean
+    public HikariDataSource dataSource(DataSourceProperties properties) {
+        return properties.initializeDataSourceBuilder()
+                .type(HikariDataSource.class)
+                .build();
+    }
+}
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\config\MinioAsyncConfiguration.java
+TAILLE: 4.64 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.config;
+
+import inc.yowyob.service.media.infrastructure.properties.MinioConfigurationProperties;
+import io.minio.BucketExistsArgs;
+import io.minio.MakeBucketArgs;
+import io.minio.MinioAsyncClient;
+import io.minio.MinioClient;
+import io.minio.errors.*;
+import lombok.RequiredArgsConstructor;
+import okhttp3.OkHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.ExecutionException;
+
+@Configuration
+@ConditionalOnClass(MinioClient.class)
+@EnableConfigurationProperties(MinioConfigurationProperties.class)
+@RequiredArgsConstructor
+public class MinioAsyncConfiguration {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MinioAsyncConfiguration.class);
+
+    private final MinioConfigurationProperties minioConfigurationProperties;
+
+    @Bean
+    public MinioAsyncClient minioAsyncClient() throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, InternalException, ErrorResponseException, InvalidResponseException, MinioException, XmlParserException, ServerException, inc.yowyob.service.media.api.exceptions.MinioException, ExecutionException, InterruptedException {
+
+        MinioAsyncClient minioClient;
+
+        if (!configuredProxy()) {
+            minioClient = MinioAsyncClient.builder()
+                    .endpoint(minioConfigurationProperties.getUrl())
+                    .credentials(minioConfigurationProperties.getAccessKey(), minioConfigurationProperties.getSecretKey())
+                    .build();
+        } else {
+            minioClient = MinioAsyncClient.builder()
+                    .endpoint(minioConfigurationProperties.getUrl())
+                    .credentials(minioConfigurationProperties.getAccessKey(), minioConfigurationProperties.getSecretKey())
+                    .httpClient(client())
+                    .build();
+        }
+        minioClient.setTimeout(
+                minioConfigurationProperties.getConnectTimeout().toMillis(),
+                minioConfigurationProperties.getWriteTimeout().toMillis(),
+                minioConfigurationProperties.getReadTimeout().toMillis()
+        );
+
+        if (minioConfigurationProperties.isCheckBucket()) {
+            try {
+                LOGGER.debug("Checking if bucket {} exists", minioConfigurationProperties.getBucket());
+                BucketExistsArgs existsArgs = BucketExistsArgs.builder()
+                        .bucket(minioConfigurationProperties.getBucket())
+                        .build();
+
+                boolean b = minioClient.bucketExists(existsArgs).get();
+
+                if (!b) {
+                    if (minioConfigurationProperties.isCreateBucket()) {
+                        try {
+                            MakeBucketArgs makeBucketArgs = MakeBucketArgs.builder()
+                                    .bucket(minioConfigurationProperties.getBucket())
+                                    .build();
+                            minioClient.makeBucket(makeBucketArgs);
+                        } catch (Exception e) {
+                            throw new inc.yowyob.service.media.api.exceptions.MinioException("Cannot create bucket", e);
+                        }
+                    } else {
+                        throw new IllegalStateException("Bucket does not exist: " + minioConfigurationProperties.getBucket());
+                    }
+                }
+            } catch (Exception e) {
+                LOGGER.error("Error while checking bucket", e);
+                throw e;
+            }
+        }
+
+        return minioClient;
+    }
+
+    private boolean configuredProxy() {
+        String httpHost = System.getProperty("http.proxyHost");
+        String httpPort = System.getProperty("http.proxyPort");
+        return httpHost != null && httpPort != null;
+    }
+
+    private OkHttpClient client() {
+        String httpHost = System.getProperty("http.proxyHost");
+        String httpPort = System.getProperty("http.proxyPort");
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        if (httpHost != null)
+            builder.proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(httpHost, Integer.parseInt(httpPort))));
+
+        return builder.build();
+    }
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\config\MinioConfiguration.java
+TAILLE: 4.44 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.config;
+
+import inc.yowyob.service.media.infrastructure.properties.MinioConfigurationProperties;
+import io.minio.BucketExistsArgs;
+import io.minio.MakeBucketArgs;
+import io.minio.MinioClient;
+import io.minio.errors.*;
+import okhttp3.OkHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import org.springframework.context.annotation.Bean;
+
+@Configuration
+@ConditionalOnClass(MinioClient.class)
+@EnableConfigurationProperties(MinioConfigurationProperties.class)
+public class MinioConfiguration {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MinioConfiguration.class);
+
+    @Autowired
+    private MinioConfigurationProperties minioConfigurationProperties;
+
+    @Bean
+    public MinioClient minioClient() throws IOException, InvalidKeyException, NoSuchAlgorithmException, InsufficientDataException, InternalException, ErrorResponseException, InvalidResponseException, MinioException, XmlParserException, ServerException, inc.yowyob.service.media.api.exceptions.MinioException {
+
+        MinioClient minioClient;
+        if (!configuredProxy()) {
+            minioClient = MinioClient.builder()
+                    .endpoint(minioConfigurationProperties.getUrl())
+                    .credentials(minioConfigurationProperties.getAccessKey(), minioConfigurationProperties.getSecretKey())
+                    .build();
+        } else {
+            minioClient = MinioClient.builder()
+                    .endpoint(minioConfigurationProperties.getUrl())
+                    .credentials(minioConfigurationProperties.getAccessKey(), minioConfigurationProperties.getSecretKey())
+                    .httpClient(client())
+                    .build();
+        }
+        minioClient.setTimeout(
+                minioConfigurationProperties.getConnectTimeout().toMillis(),
+                minioConfigurationProperties.getWriteTimeout().toMillis(),
+                minioConfigurationProperties.getReadTimeout().toMillis()
+        );
+
+        if (minioConfigurationProperties.isCheckBucket()) {
+            try {
+                LOGGER.debug("Checking if bucket {} exists", minioConfigurationProperties.getBucket());
+                BucketExistsArgs existsArgs = BucketExistsArgs.builder()
+                        .bucket(minioConfigurationProperties.getBucket())
+                        .build();
+                boolean b = minioClient.bucketExists(existsArgs);
+                if (!b) {
+                    if (minioConfigurationProperties.isCreateBucket()) {
+                        try {
+                            MakeBucketArgs makeBucketArgs = MakeBucketArgs.builder()
+                                    .bucket(minioConfigurationProperties.getBucket())
+                                    .build();
+                            minioClient.makeBucket(makeBucketArgs);
+                        } catch (Exception e) {
+                            throw new inc.yowyob.service.media.api.exceptions.MinioException("Cannot create bucket", e);
+                        }
+                    } else {
+                        throw new IllegalStateException("Bucket does not exist: " + minioConfigurationProperties.getBucket());
+                    }
+                }
+            } catch (Exception e) {
+                LOGGER.error("Error while checking bucket", e);
+                throw e;
+            }
+        }
+
+        return minioClient;
+    }
+
+    private boolean configuredProxy() {
+        String httpHost = System.getProperty("http.proxyHost");
+        String httpPort = System.getProperty("http.proxyPort");
+        return httpHost != null && httpPort != null;
+    }
+
+    private OkHttpClient client() {
+        String httpHost = System.getProperty("http.proxyHost");
+        String httpPort = System.getProperty("http.proxyPort");
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        if (httpHost != null)
+            builder.proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(httpHost, Integer.parseInt(httpPort))));
+        return builder
+                .build();
+    }
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\config\MinioMetricConfiguration.java
+TAILLE: 7.78 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.config;
+
+
+import inc.yowyob.service.media.infrastructure.properties.MinioConfigurationProperties;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
+import io.minio.MinioClient;
+import jakarta.annotation.PostConstruct;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.health.ConditionalOnEnabledHealthIndicator;
+import org.springframework.boot.actuate.autoconfigure.health.HealthContributorAutoConfiguration;
+import org.springframework.boot.actuate.autoconfigure.web.server.ManagementContextAutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.concurrent.TimeUnit;
+
+@Aspect
+@Configuration
+@ConditionalOnClass({MinioClient.class, ManagementContextAutoConfiguration.class})
+@ConditionalOnEnabledHealthIndicator("minio")
+@AutoConfigureBefore(HealthContributorAutoConfiguration.class)
+@AutoConfigureAfter(MinioConfiguration.class)
+public class MinioMetricConfiguration {
+
+    private final MeterRegistry meterRegistry;
+    private final MinioConfigurationProperties minioConfigurationProperties;
+
+    private Timer listOkTimer;
+
+    private Timer listKoTimer;
+
+    private Timer getOkTimer;
+
+    private Timer getKoTimer;
+
+    private Timer putOkTimer;
+
+    private Timer putKoTimer;
+
+    private Timer removeOkTimer;
+
+    private Timer removeKoTimer;
+
+    private Timer listBucketOkTimer;
+
+    private Timer listBucketKoTimer;
+
+    @Autowired
+    public MinioMetricConfiguration(MeterRegistry meterRegistry, MinioConfigurationProperties minioConfigurationProperties) {
+        this.meterRegistry = meterRegistry;
+        this.minioConfigurationProperties = minioConfigurationProperties;
+    }
+
+    @PostConstruct
+    public void initTimers() {
+        listOkTimer = Timer
+                .builder(minioConfigurationProperties.getMetricName())
+                .tag("operation", "listObjects")
+                .tag("status", "ok")
+                .tag("bucket", minioConfigurationProperties.getBucket())
+                .register(meterRegistry);
+
+        listKoTimer = Timer
+                .builder(minioConfigurationProperties.getMetricName())
+                .tag("operation", "listObjects")
+                .tag("status", "ko")
+                .tag("bucket", minioConfigurationProperties.getBucket())
+                .register(meterRegistry);
+
+        getOkTimer = Timer
+                .builder(minioConfigurationProperties.getMetricName())
+                .tag("operation", "getObject")
+                .tag("status", "ok")
+                .tag("bucket", minioConfigurationProperties.getBucket())
+                .register(meterRegistry);
+
+        getKoTimer = Timer
+                .builder(minioConfigurationProperties.getMetricName())
+                .tag("operation", "getObject")
+                .tag("status", "ko")
+                .tag("bucket", minioConfigurationProperties.getBucket())
+                .register(meterRegistry);
+
+        putOkTimer = Timer
+                .builder(minioConfigurationProperties.getMetricName())
+                .tag("operation", "putObject")
+                .tag("status", "ok")
+                .tag("bucket", minioConfigurationProperties.getBucket())
+                .register(meterRegistry);
+
+        putKoTimer = Timer
+                .builder(minioConfigurationProperties.getMetricName())
+                .tag("operation", "putObject")
+                .tag("status", "ko")
+                .tag("bucket", minioConfigurationProperties.getBucket())
+                .register(meterRegistry);
+
+        listBucketOkTimer = Timer
+                .builder(minioConfigurationProperties.getMetricName() + ".list.bucket")
+                .tag("operation", "listBuckets")
+                .tag("status", "ok")
+                .register(meterRegistry);
+
+        listBucketKoTimer = Timer
+                .builder(minioConfigurationProperties.getMetricName() + ".list.bucket")
+                .tag("operation", "listBuckets")
+                .tag("status", "ko")
+                .register(meterRegistry);
+
+        removeOkTimer = Timer
+                .builder(minioConfigurationProperties.getMetricName())
+                .tag("operation", "removeObject")
+                .tag("status", "ok")
+                .tag("bucket", minioConfigurationProperties.getBucket())
+                .register(meterRegistry);
+
+        removeKoTimer = Timer
+                .builder(minioConfigurationProperties.getMetricName())
+                .tag("operation", "removeObject")
+                .tag("status", "ko")
+                .tag("bucket", minioConfigurationProperties.getBucket())
+                .register(meterRegistry);
+    }
+
+
+    @ConditionalOnBean(MinioClient.class)
+    @Around("execution(* io.minio.MinioClient.getObject(..))")
+    public Object getMeter(ProceedingJoinPoint pjp) throws Throwable {
+        long l = System.currentTimeMillis();
+
+        try {
+            Object proceed = pjp.proceed();
+            getOkTimer.record(System.currentTimeMillis() - l, TimeUnit.MILLISECONDS);
+            return proceed;
+        } catch (Exception e) {
+            getKoTimer.record(System.currentTimeMillis() - l, TimeUnit.MILLISECONDS);
+            throw e;
+        }
+    }
+
+    @ConditionalOnBean(MinioClient.class)
+    @Around("execution(* io.minio.MinioClient.listObjects(..))")
+    public Object listMeter(ProceedingJoinPoint pjp) throws Throwable {
+        long l = System.currentTimeMillis();
+
+        try {
+            Object proceed = pjp.proceed();
+            listOkTimer.record(System.currentTimeMillis() - l, TimeUnit.MILLISECONDS);
+            return proceed;
+        } catch (Exception e) {
+            listKoTimer.record(System.currentTimeMillis() - l, TimeUnit.MILLISECONDS);
+            throw e;
+        }
+    }
+
+    @ConditionalOnBean(MinioClient.class)
+    @Around("execution(* io.minio.MinioClient.putObject(..))")
+    public Object putMeter(ProceedingJoinPoint pjp) throws Throwable {
+        long l = System.currentTimeMillis();
+
+        try {
+            Object proceed = pjp.proceed();
+            putOkTimer.record(System.currentTimeMillis() - l, TimeUnit.MILLISECONDS);
+            return proceed;
+        } catch (Exception e) {
+            putKoTimer.record(System.currentTimeMillis() - l, TimeUnit.MILLISECONDS);
+            throw e;
+        }
+    }
+
+    @ConditionalOnBean(MinioClient.class)
+    @Around("execution(* io.minio.MinioClient.listBuckets(..))")
+    public Object listBucketMeter(ProceedingJoinPoint pjp) throws Throwable {
+        long l = System.currentTimeMillis();
+
+        try {
+            Object proceed = pjp.proceed();
+            listBucketOkTimer.record(System.currentTimeMillis() - l, TimeUnit.MILLISECONDS);
+            return proceed;
+        } catch (Exception e) {
+            listBucketKoTimer.record(System.currentTimeMillis() - l, TimeUnit.MILLISECONDS);
+            throw e;
+        }
+    }
+
+    @ConditionalOnBean(MinioClient.class)
+    @Around("execution(* io.minio.MinioClient.removeObject(..))")
+    public Object removeMeter(ProceedingJoinPoint pjp) throws Throwable {
+        long l = System.currentTimeMillis();
+
+        try {
+            Object proceed = pjp.proceed();
+            removeOkTimer.record(System.currentTimeMillis() - l, TimeUnit.MILLISECONDS);
+            return proceed;
+        } catch (Exception e) {
+            removeKoTimer.record(System.currentTimeMillis() - l, TimeUnit.MILLISECONDS);
+            throw e;
+        }
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\config\MinioNotificationConfiguration.java
+TAILLE: 4.23 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.config;
+
+import inc.yowyob.service.media.infrastructure.notification.MinioNotification;
+import inc.yowyob.service.media.infrastructure.properties.MinioConfigurationProperties;
+import io.minio.ListenBucketNotificationArgs;
+import io.minio.MinioClient;
+import io.minio.messages.NotificationRecords;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.aop.support.AopUtils;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+
+
+@EnableAsync
+@RequiredArgsConstructor
+public class MinioNotificationConfiguration implements ApplicationContextAware, ApplicationListener<ContextRefreshedEvent> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MinioNotificationConfiguration.class);
+
+    private final MinioClient minioClient;
+    private final MinioConfigurationProperties minioConfigurationProperties;
+
+    private ApplicationContext applicationContext;
+
+    @Override
+    public void setApplicationContext(ApplicationContext context) throws BeansException {
+        this.applicationContext = context;
+    }
+
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        // Delay scanning until the full context is refreshed (no circular deps)
+        for (String beanName : applicationContext.getBeanDefinitionNames()) {
+            Object bean = applicationContext.getBean(beanName);
+            Class<?> beanClass = AopUtils.getTargetClass(bean);
+
+            for (Method method : beanClass.getDeclaredMethods()) {
+                if (method.isAnnotationPresent(MinioNotification.class)) {
+                    validateMethod(method);
+                    MinioNotification annotation = method.getAnnotation(MinioNotification.class);
+                    startListener(bean, method, annotation);
+                }
+            }
+        }
+    }
+
+    private void validateMethod(Method method) {
+        if (method.getParameterCount() != 1 || method.getParameterTypes()[0] != NotificationRecords.class) {
+            throw new IllegalArgumentException("Method " + method.getName() + " must have a single NotificationRecords parameter");
+        }
+    }
+
+    @Async
+    public void startListener(Object bean, Method method, MinioNotification annotation) {
+        while (true) {
+            try {
+                LOGGER.info("Registering MinIO handler: method={} events={}", method.getName(), Arrays.toString(annotation.value()));
+                ListenBucketNotificationArgs args = ListenBucketNotificationArgs.builder()
+                        .bucket(minioConfigurationProperties.getBucket())
+                        .prefix(annotation.prefix())
+                        .suffix(annotation.suffix())
+                        .events(annotation.value())
+                        .build();
+
+                try (var iterator = minioClient.listenBucketNotification(args)) {
+                    while (iterator.hasNext()) {
+                        NotificationRecords records = iterator.next().get();
+                        try {
+                            LOGGER.debug("Invoking MinIO handler method: {}", method.getName());
+                            method.invoke(bean, records);
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            LOGGER.error("Failed to invoke MinIO handler method: {}", method.getName(), e);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                LOGGER.error("Listener failed for method {}, retrying in 5 seconds...", method.getName(), e);
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException ignored) {
+                }
+            }
+        }
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\config\R2dbcConfiguration.java
+TAILLE: 2.10 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.config;
+
+
+
+import inc.yowyob.service.media.infrastructure.properties.R2dbcProperties;
+import io.r2dbc.spi.ConnectionFactories;
+import io.r2dbc.spi.ConnectionFactory;
+import io.r2dbc.spi.ConnectionFactoryOptions;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.r2dbc.convert.R2dbcCustomConversions;
+import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
+import org.springframework.data.r2dbc.dialect.PostgresDialect;
+import org.springframework.data.r2dbc.mapping.R2dbcMappingContext;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Configuration
+@RequiredArgsConstructor
+public class R2dbcConfiguration {
+
+    private final R2dbcProperties r2dbcProperties;
+
+
+    @Bean
+    public ConnectionFactory connectionFactory() {
+        ConnectionFactoryOptions options = ConnectionFactoryOptions.parse(r2dbcProperties.getUrl())
+                .mutate()
+                .option(ConnectionFactoryOptions.USER, r2dbcProperties.getUsername())
+                .option(ConnectionFactoryOptions.PASSWORD, r2dbcProperties.getPassword())
+                .build();
+        return ConnectionFactories.get(options);
+    }
+
+
+    @Bean
+    public R2dbcMappingContext r2dbcMappingContext() {
+        return new R2dbcMappingContext();
+    }
+
+
+    @Bean
+    public R2dbcEntityTemplate r2dbcEntityTemplate(ConnectionFactory connectionFactory) {
+        return new R2dbcEntityTemplate(connectionFactory);
+    }
+
+    @Bean
+    public R2dbcCustomConversions r2dbcCustomConversions(ConnectionFactory connectionFactory) {
+        PostgresDialect dialect = PostgresDialect.INSTANCE;
+        List<Object> converters = new ArrayList<>(dialect.getConverters());
+        converters.addAll(R2dbcCustomConversions.STORE_CONVERTERS);
+
+
+        return new R2dbcCustomConversions(
+                R2dbcCustomConversions.StoreConversions.of(dialect.getSimpleTypeHolder(), converters),
+                List.of()
+        );
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\config\SecurityConfig.java
+TAILLE: 1.79 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
+
+@Configuration
+@EnableReactiveMethodSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+        return http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .authorizeExchange(exchanges -> exchanges
+                        .anyExchange().permitAll()
+                )
+
+                .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
+                .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
+                .build();
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.setAllowedOrigins(List.of("*"));
+
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        // Headers autorisés
+        configuration.setAllowedHeaders(List.of("*"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
+    }
+}
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\config\SpringSecurityAuditorAware.java
+TAILLE: 870 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.config;
+
+import org.springframework.data.domain.ReactiveAuditorAware;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
+
+import java.util.UUID;
+
+@Component
+public class SpringSecurityAuditorAware implements ReactiveAuditorAware<UUID> {
+
+    @Override
+    public Mono<UUID> getCurrentAuditor() {
+        return ReactiveSecurityContextHolder.getContext()
+                .map(SecurityContext::getAuthentication)
+                .filter(Authentication::isAuthenticated)
+                .map(Authentication::getName)
+                .map(UUID::fromString);
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\config\WebFluxConfig.java
+TAILLE: 545 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.config;
+
+import inc.yowyob.service.media.infrastructure.converters.StringToMediaTypeConverter;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.web.reactive.config.WebFluxConfigurer;
+
+@Configuration
+public class WebFluxConfig implements WebFluxConfigurer {
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new StringToMediaTypeConverter());
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\converters\StringToMediaTypeConverter.java
+TAILLE: 488 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.converters;
+
+import inc.yowyob.service.media.application.enums.MediaType;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
+
+@Component
+public class StringToMediaTypeConverter implements Converter<String, MediaType> {
+
+    @Override
+    public MediaType convert(@NotNull String value) {
+        return MediaType.fromValue(value);
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\notification\MinioNotification.java
+TAILLE: 962 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.notification;
+
+import io.minio.messages.NotificationRecords;
+import org.springframework.scheduling.annotation.Async;
+
+import java.lang.annotation.*;
+
+
+/**
+ * Add a listener to the Minio bucket, which handle the events given in the {@code value} parameter.
+ * The annotated method should have a parameter {@link NotificationRecords} and return {@code void}.
+ */
+
+@Async
+@Inherited
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MinioNotification {
+
+    /**
+     * All events that the method handler should receive. Values defined
+     * in <a href="https://docs.min.io/docs/minio-bucket-notification-guide.html">Minio documentation</a> are allowed.
+     */
+    String[] value();
+
+    /**
+     * Prefix of the items that should be handled
+     */
+    String prefix() default "";
+
+    /**
+     * Suffix of the items that should be handled
+     */
+    String suffix() default "";
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\persistence\callback\MediaCallback.java
+TAILLE: 846 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.persistence.callback;
+
+import inc.yowyob.service.media.infrastructure.persistence.entities.Media;
+//import inc.yowyob.utils.UuidUtils;
+//import inc.yowyob.utils.common.FieldInitUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.reactivestreams.Publisher;
+import org.springframework.data.r2dbc.mapping.event.BeforeConvertCallback;
+import org.springframework.data.relational.core.sql.SqlIdentifier;
+import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
+
+@Component
+@Slf4j
+public class MediaCallback implements BeforeConvertCallback<Media> {
+
+    @Override
+    public Publisher<Media> onBeforeConvert(Media media, SqlIdentifier table) {
+        //FieldInitUtil.initIfNull(media::getId, media::setId, UuidUtils.timeBasedUUID());
+
+        return Mono.just(media);
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\persistence\entities\Entity.java
+TAILLE: 728 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.persistence.entities;
+
+import lombok.Data;
+import org.springframework.data.annotation.*;
+import org.springframework.data.relational.core.mapping.Column;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Data
+public abstract class Entity {
+
+    @ReadOnlyProperty
+    @Column("created_at")
+    private LocalDateTime createdAt;
+
+    @ReadOnlyProperty
+    @Column("updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column("deleted_at")
+    private LocalDateTime deletedAt;
+
+    @Column("created_by")
+    private UUID createdBy;
+
+    @Column("updated_by")
+    private UUID updatedBy;
+
+    @Column("deleted_by")
+    private UUID deletedBy;
+}
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\persistence\entities\Media.java
+TAILLE: 1.05 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.persistence.entities;
+
+
+import inc.yowyob.service.media.infrastructure.config.DatabaseConfig;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Data
+@EqualsAndHashCode(callSuper = false)
+@ToString
+@Table(DatabaseConfig.MEDIA_TABLE)
+public class Media extends Entity  {
+    @Id
+    @Column("id")
+    private UUID id;
+
+    @Column("service")
+    private String service;
+
+    @Column("name")
+    private String name;
+
+    @Column("real_name")
+    private String realName;
+
+    @Column("size")
+    private Long size;
+
+    @Column("mime")
+    private String mime;
+
+    @Column("extension")
+    private String extension;
+
+    @Column("path")
+    private String path;
+
+    @Column("uri")
+    private String uri;
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\persistence\repositories\MediaRepository.java
+TAILLE: 863 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.persistence.repositories;
+
+import inc.yowyob.service.media.infrastructure.persistence.entities.Media;
+import org.springframework.data.r2dbc.repository.R2dbcRepository;
+import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.util.UUID;
+
+/**
+ * @author ETOUGUE
+ */
+@Repository
+public interface MediaRepository extends R2dbcRepository<Media, UUID> {
+    Flux<Media> findByService(String service);
+
+    Mono<Media> findByServiceAndId(String service, UUID id);
+
+    Mono<Media> findByPath(String path);
+
+    Mono<Media> findByServiceAndPath(String service, String path);
+
+    Flux<Media> findByServiceAndNameContaining(String service, String name);
+
+    Flux<Media> findByServiceAndNameContainingIgnoreCase(String service, String name);
+
+}
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\properties\MinioConfigurationProperties.java
+TAILLE: 2.00 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.properties;
+
+
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+import java.time.Duration;
+
+@Getter
+@Setter
+@ConfigurationProperties("spring.minio")
+public class MinioConfigurationProperties {
+    /**
+     * URL for Minio instance. Can include the HTTP scheme. Must include the port. If the port is not provided, then the port of the HTTP is taken.
+     */
+    private String url = "https://play.min.io";
+
+    /**
+     * Access key (login) on Minio instance
+     */
+    private String accessKey;
+
+    /**
+     * Secret key (password) on Minio instance
+     */
+    private String secretKey;
+
+    /**
+     * If the scheme is not provided in {@code url} property, define if the connection is done via HTTP or HTTPS.
+     */
+    private boolean secure = false;
+
+    /**
+     * Bucket name for the application. The bucket must already exists on Minio.
+     */
+    private String bucket;
+
+    /**
+     * Metric configuration prefix which are registered on Actuator.
+     */
+    private String metricName = "minio.storage";
+
+    /**
+     * Define the connect timeout for the Minio Client.
+     */
+    private Duration connectTimeout = Duration.ofSeconds(10);
+
+    /**
+     * Define the write timeout for the Minio Client.
+     */
+    private Duration writeTimeout = Duration.ofSeconds(60);
+
+    /**
+     * Define the read timeout for the Minio Client.
+     */
+    private Duration readTimeout = Duration.ofSeconds(10);
+
+    /**
+     * Check if the bucket exists on Minio instance.
+     * Settings this false will disable the check during the application context initialization.
+     * This property should be used for debug purpose only, because operations on Minio will not work during runtime.
+     */
+    private boolean checkBucket = true;
+
+    /**
+     * Will create the bucket if it do not exists on the Minio instance.
+     */
+    private boolean createBucket = true;
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\infrastructure\properties\R2dbcProperties.java
+TAILLE: 417 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.infrastructure.properties;
+
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+@Data
+@Configuration
+@ConfigurationProperties(prefix = "spring.r2dbc")
+public class R2dbcProperties {
+    private String url;
+    private String username;
+    private String password;
+}
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\utils\ApiResponse.java
+TAILLE: 587 B
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.utils;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ApiResponse<T> {
+
+    private int httpStatusCode;
+
+    private String status;
+
+    private String message;
+
+    private T data;
+
+    @Builder.Default
+    private LocalDateTime timestamp = LocalDateTime.now();
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\utils\FileTypeUtils.java
+TAILLE: 2.27 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.utils;
+
+import inc.yowyob.service.media.application.enums.MediaType;
+
+import java.util.Locale;
+import java.util.Set;
+
+public class FileTypeUtils {
+
+    private static final Set<String> IMAGE_EXTENSIONS = Set.of("jpg", "jpeg", "png", "gif", "bmp", "webp");
+    private static final Set<String> AUDIO_EXTENSIONS = Set.of("mp3", "wav", "aac", "ogg", "flac", "m4a");
+    private static final Set<String> VIDEO_EXTENSIONS = Set.of("mp4", "avi", "mov", "mkv", "webm", "flv");
+    private static final Set<String> PDF_EXTENSIONS = Set.of("pdf");
+
+    public static boolean isImage(String filename) {
+        return hasExtension(filename, IMAGE_EXTENSIONS);
+    }
+
+    public static boolean isAudio(String filename) {
+        return hasExtension(filename, AUDIO_EXTENSIONS);
+    }
+
+    public static boolean isVideo(String filename) {
+        return hasExtension(filename, VIDEO_EXTENSIONS);
+    }
+
+    public static boolean isPdf(String filename) {
+        return hasExtension(filename, PDF_EXTENSIONS);
+    }
+
+    private static boolean hasExtension(String filename, Set<String> validExtensions) {
+        if (filename == null || !filename.contains(".")) return false;
+        String ext = filename.substring(filename.lastIndexOf('.') + 1).toLowerCase();
+        return validExtensions.contains(ext);
+    }
+
+    public static boolean hasExtension(String filename){
+        return filename != null && filename.contains(".") && !filename.endsWith(".");
+    }
+
+    public static boolean isValid(String type, String fullPath){
+        return switch (type.toLowerCase()) {
+            case "image", "photo", "avatar" -> FileTypeUtils.isImage(fullPath);
+            case "audio" -> FileTypeUtils.isAudio(fullPath);
+            case "video" -> FileTypeUtils.isVideo(fullPath);
+            case "pdf"   -> FileTypeUtils.isPdf(fullPath);
+            default      -> false;
+        };
+
+    }
+
+    public static MediaType resolveMediaType(String ext) {
+        ext = ext.toLowerCase(Locale.ROOT);
+
+        if (IMAGE_EXTENSIONS.contains(ext)) return MediaType.IMAGE;
+        if (AUDIO_EXTENSIONS.contains(ext)) return MediaType.AUDIO;
+        if (VIDEO_EXTENSIONS.contains(ext)) return MediaType.VIDEO;
+        if (PDF_EXTENSIONS.contains(ext)) return MediaType.PDF;
+
+        return MediaType.FILE;
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\utils\FileUtils.java
+TAILLE: 2.66 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.utils;
+
+import org.springframework.core.io.buffer.DataBufferUtils;
+import org.springframework.http.MediaType;
+import org.springframework.http.codec.multipart.FilePart;
+import reactor.core.publisher.Mono;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.util.Locale;
+
+public class FileUtils {
+
+    public static String getExtension(String filename) {
+        if (filename == null || !filename.contains(".")) return "";
+        return filename.substring(filename.lastIndexOf('.') + 1).toLowerCase(Locale.ROOT);
+    }
+
+    public static String getBasename(String filename) {
+        if (filename == null || !filename.contains(".")) return "";
+        return filename.substring(0, filename.lastIndexOf("."));
+    }
+
+    public static String getContentType(FilePart filePart){
+        MediaType mediaType = filePart.headers().getContentType();
+        if(mediaType != null){
+            return mediaType.toString();
+        }
+        return null;
+    }
+
+    public static String generateHashedFileName(String originalName) {
+        String extension = getExtension(originalName);
+        String baseName = getBasename(originalName);
+
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        String toHash = baseName + "_" + timestamp;
+
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] digest = md.digest(toHash.getBytes(StandardCharsets.UTF_8));
+            String hashed = Base64.getUrlEncoder().withoutPadding().encodeToString(digest);
+            return hashed + "." + extension;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error generating hash", e);
+        }
+    }
+
+    public static Mono<byte[]> convert(FilePart filePart) {
+        return DataBufferUtils.join(filePart.content())
+                .map(dataBuffer -> {
+                    byte[] bytes = new byte[dataBuffer.readableByteCount()];
+                    dataBuffer.read(bytes);
+                    DataBufferUtils.release(dataBuffer);
+                    return bytes;
+                });
+    }
+
+    public static String sanitizeService(String service) {
+        if (service == null || service.trim().isEmpty()) {
+            throw new IllegalArgumentException("Service name cannot be empty");
+        }
+        return service.replaceAll("[^a-zA-Z0-9_-]", "");
+    }
+
+    public static String sanitizeLocation(String location) {
+        if (location == null || location.trim().isEmpty()) {
+            return "";
+        }
+        return location.replaceAll("^/+|/+$|[^a-zA-Z0-9/_-]", "");
+    }
+
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\java\inc\yowyob\service\media\utils\HttpResponse.java
+TAILLE: 1.86 KB
+────────────────────────────────────────────────────────────────────────────────
+package inc.yowyob.service.media.utils;
+
+import org.springframework.http.HttpStatus;
+
+public final class HttpResponse {
+
+    private HttpResponse() {
+    }
+
+    /**
+     * Crée une réponse de succès standard (HTTP 200 OK).
+     * @param data La donnée à inclure dans la réponse.
+     * @return Un ApiResponse configuré pour le succès.
+     */
+    public static <T> ApiResponse<T> createSuccessResponse(T data) {
+        return ApiResponse.<T>builder()
+                .httpStatusCode(HttpStatus.OK.value())
+                .status("SUCCESS")
+                .message("Request processed successfully")
+                .data(data)
+                .build();
+    }
+
+    /**
+     * Crée une réponse de succès avec un message personnalisé (HTTP 200 OK).
+     * @param data La donnée à inclure.
+     * @param message Le message personnalisé.
+     * @return Un ApiResponse configuré pour le succès.
+     */
+    public static <T> ApiResponse<T> createSuccessResponse(T data, String message) {
+        return ApiResponse.<T>builder()
+                .httpStatusCode(HttpStatus.OK.value())
+                .status("SUCCESS")
+                .message(message)
+                .data(data)
+                .build();
+    }
+
+    /**
+     * Crée une réponse d'erreur standard.
+     * C'est la méthode utilisée dans votre GlobalExceptionHandler.
+     * @param httpStatus Le statut HTTP de l'erreur (ex: NOT_FOUND, INTERNAL_SERVER_ERROR).
+     * @param message Le message d'erreur.
+     * @return Un ApiResponse configuré pour une erreur (sans données).
+     */
+    public static <T> ApiResponse<T> createBadResponse(HttpStatus httpStatus, String message) {
+        return ApiResponse.<T>builder()
+                .httpStatusCode(httpStatus.value())
+                .status("ERROR")
+                .message(message)
+                .build();
+    }
+}
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\resources\application.properties
+TAILLE: 2.46 KB
+────────────────────────────────────────────────────────────────────────────────
+
+server.port=${SERVER_PORT:8081}
+
+
+spring.cloud.config.enabled=false
+
+spring.application.name=media-service
+spring.main.web-application-type=reactive
+#logging.level.org.springframework.boot.autoconfigure=DEBUG
+
+
+eureka.client.enabled=${EUREKA_CLIENT_ENABLED:false}
+
+
+spring.r2dbc.url=${SPRING_R2DBC_URL:r2dbc:postgresql://localhost:5435/media_db}
+spring.r2dbc.username=${SPRING_R2DBC_USERNAME:postgres}
+spring.r2dbc.password=${SPRING_R2DBC_PASSWORD:password}
+spring.r2dbc.pool.enabled=${SPRING_R2DBC_POOL_ENABLED:true}
+# Nombre de connexions ouvertes au démarrage
+spring.r2dbc.pool.initial-size=1
+# MAX connexions simultanées vers PostgreSQL
+spring.r2dbc.pool.max-size=5
+# Temps max d’attente pour obtenir une connexion
+spring.r2dbc.pool.max-acquire-time=30s
+# Libère les connexions inutilisées
+spring.r2dbc.pool.max-idle-time=30m
+# Recycle les connexions (évite les leaks)
+spring.r2dbc.pool.max-life-time=10m
+# Retry si le pool est saturé
+spring.r2dbc.pool.acquire-retry=3
+# Vérification de la connexion
+spring.r2dbc.pool.validation-query=SELECT 1
+
+
+#spring.security.oauth2.resourceserver.jwt.issuer-uri=http://localhost:8088/realms/your-realm
+
+spring.minio.url=${SPRING_MINIO_URL:http://127.0.0.1:9000}
+spring.minio.access-key=${SPRING_MINIO_ACCESS_KEY:minioadmin}
+spring.minio.secret-key=${SPRING_MINIO_SECRET_KEY:minioadmin}
+spring.minio.bucket=${SPRING_MINIO_BUCKET:media}
+spring.minio.check-bucket=${SPRING_MINIO_CHECK_BUCKET:true}
+spring.minio.create-bucket=${SPRING_MINIO_CREATE_BUCKET:true}
+
+
+management.endpoints.web.exposure.include=health,prometheus
+
+
+logging.level.root=INFO
+logging.level.org.springframework.security=DEBUG
+logging.level.org.springframework.web.reactive=DEBUG
+logging.level.org.springframework.r2dbc=DEBUG
+
+
+
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.api-docs.path=/v3/api-docs
+springdoc.info.title=Media Service API
+springdoc.info.description=API for managing media files (uploads, downloads, etc.)
+springdoc.info.version=v1.0.0
+springdoc.info.contact.name=Votre Nom
+springdoc.info.contact.email=votre.email@example.com
+server.forward-headers-strategy=framework
+
+
+spring.liquibase.enabled=true
+spring.liquibase.change-log=classpath:db/migrations/default/master.xml
+
+spring.datasource.url=${DB_URL:jdbc:postgresql://localhost:5432/media_db}
+spring.datasource.username=${DB_USERNAME:postgres}
+spring.datasource.password=${DB_PASSWORD:password}
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\resources\db\migrations\default\master.xml
+TAILLE: 483 B
+────────────────────────────────────────────────────────────────────────────────
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Include individual migration files -->
+    <include file="db/migrations/default/V1__2025_10_10_0001_create_media_table.xml"/>
+</databaseChangeLog>
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+FICHIER: src\main\resources\db\migrations\default\V1__2025_10_10_0001_create_media_table.xml
+TAILLE: 3.61 KB
+────────────────────────────────────────────────────────────────────────────────
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Create Client Table -->
+    <changeSet id="enable-uuid-ossp" author="KOGHENE">
+        <sql>CREATE EXTENSION IF NOT EXISTS "uuid-ossp";</sql>
+    </changeSet>
+
+    <changeSet id="create-update-timestamp-function" author="KOGHENE">
+        <comment>Creates a function to automatically update the updated_at timestamp on row modification</comment>
+        <sql splitStatements="false" endDelimiter="$$" stripComments="false">
+            CREATE OR REPLACE FUNCTION update_timestamp_column()
+            RETURNS TRIGGER AS $$
+            BEGIN
+               NEW.updated_at = now();
+            RETURN NEW;
+            END;
+            $$ language 'plpgsql';
+        </sql>
+    </changeSet>
+    <changeSet id="create-media-table" author="Etougue">
+        <createTable tableName="media">
+            <!-- Client ID -->
+            <column name="id" type="UUID"
+                    defaultValueComputed="uuid_generate_v4()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="service" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="real_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="size" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="mime" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="extension" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="path" type="VARCHAR(1024)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="uri" type="VARCHAR(1024)">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Audit fields -->
+            <column name="created_at" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="created_by" type="UUID"/>
+            <column name="updated_by" type="UUID"/>
+            <column name="deleted_by" type="UUID"/>
+        </createTable>
+
+        <createIndex indexName="idx_media_name"
+                     tableName="media">
+            <column name="name"/>
+        </createIndex>
+
+        <createIndex indexName="idx_media_path"
+                     tableName="media">
+            <column name="path"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="attach-update-trigger-to-media" author="KOGHENE">
+        <comment>Attach the timestamp update trigger to the media table</comment>
+        <sql>
+            CREATE TRIGGER update_media_timestamp
+                BEFORE UPDATE ON media
+                FOR EACH ROW
+                EXECUTE FUNCTION update_timestamp_column();
+        </sql>
+    </changeSet>
+
+
+</databaseChangeLog>
+
+
+
+================================================================================
+STATISTIQUES
+================================================================================
+Nombre de fichiers analysés: 63
+Taille totale: 113.65 KB

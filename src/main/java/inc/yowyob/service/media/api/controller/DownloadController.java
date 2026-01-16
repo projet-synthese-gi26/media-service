@@ -33,7 +33,7 @@ public class DownloadController {
                         .map(bytes -> {
                             Flux<DataBuffer> dataBufferFlux = Flux.just(new DefaultDataBufferFactory().wrap(bytes));
                             return ResponseEntity.ok()
-                                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + media.getName() + "\"")
+                                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + media.getName() + "\"")
                                     .contentType(MediaType.parseMediaType(media.getMime()))
                                     .body(dataBufferFlux);
                         })

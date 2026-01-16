@@ -6,8 +6,10 @@ import inc.yowyob.service.media.application.services.MinioService;
 import inc.yowyob.service.media.infrastructure.persistence.entities.Media;
 import inc.yowyob.service.media.infrastructure.persistence.repositories.MediaRepository;
 import inc.yowyob.service.media.utils.FileUtils;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
@@ -28,12 +30,14 @@ public class MediaServiceImpl implements MediaService {
 
     private final MediaRepository mediaRepository;
 
+    @Value("${app.public-url:http://localhost:8081}")
+    private String publicUrl;
+
     @Override
     public Mono<Media> uploadMedia(FilePart filePart, String service, String location) {
         String realFileName = filePart.filename();
         String fileName = FileUtils.generateHashedFileName(realFileName);
         String extension = FileUtils.getExtension(fileName);
-
 
         String normalizedLocation = location.replace("\\", "/");
         String objectKey = Path.of(normalizedLocation, fileName).toString().replace("\\", "/");
@@ -48,11 +52,19 @@ public class MediaServiceImpl implements MediaService {
             media.setMime(FileUtils.getContentType(filePart));
             media.setExtension(extension);
             media.setPath(objectKey);
+
             media.setUri(Path.of(media.getService(), objectKey).toString().replace("\\", "/"));
 
             return mediaRepository.save(media)
-                    .doOnNext(savedMedia ->
-                            log.info("Media saved with ID: {}", savedMedia.getId()));
+                    .map(savedMedia -> {
+                        String accessUrl = String.format("%s/media/%s",
+                                removeTrailingSlash(publicUrl),
+                                savedMedia.getId());
+
+                        savedMedia.setUri(accessUrl);
+                        log.info("Media saved with ID: {} and Public URL: {}", savedMedia.getId(), accessUrl);
+                        return savedMedia;
+                    });
         });
     }
 
@@ -63,6 +75,7 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public Mono<Media> replaceMedia(UUID id, FilePart filePart, String location) {
+        // Même logique pour le replace
         String realFileName = filePart.filename();
         String fileName = FileUtils.generateHashedFileName(realFileName);
         String extension = FileUtils.getExtension(fileName);
@@ -70,7 +83,6 @@ public class MediaServiceImpl implements MediaService {
         return this.getMediaMetadata(id).flatMap(media -> {
             String oldPath = media.getPath();
             Path source = Path.of(Path.of(media.getPath()).getParent().toString(), fileName);
-
             if (location != null && !location.trim().isEmpty()) {
                 source = Path.of(location, fileName);
             }
@@ -82,12 +94,24 @@ public class MediaServiceImpl implements MediaService {
                 media.setMime(FileUtils.getContentType(filePart));
                 media.setExtension(extension);
                 media.setPath(objectKey.toString());
-                media.setUri(Path.of(media.getService(), media.getPath()).toString());
+
                 return mediaRepository.save(media);
             }).flatMap(newMedia -> {
                 return minioService.remove(Path.of(oldPath), media.getService())
-                        .thenReturn(newMedia)
-                        .onErrorResume(err -> Mono.just(newMedia));
+                        .then(Mono.fromCallable(() -> {
+                            String accessUrl = String.format("%s/media/%s",
+                                    removeTrailingSlash(publicUrl),
+                                    newMedia.getId());
+                            newMedia.setUri(accessUrl);
+                            return newMedia;
+                        }))
+                        .onErrorResume(err -> {
+                            String accessUrl = String.format("%s/media/%s",
+                                    removeTrailingSlash(publicUrl),
+                                    newMedia.getId());
+                            newMedia.setUri(accessUrl);
+                            return Mono.just(newMedia);
+                        });
             });
         });
     }
@@ -115,6 +139,10 @@ public class MediaServiceImpl implements MediaService {
         return this.getMediaMetadata(id).flatMap(media -> {
             return minioService.generatePresignedUrl(media.getService(), media.getPath(), expiryInSeconds);
         });
+    }
+
+    private String removeTrailingSlash(String url) {
+        return url.endsWith("/") ? url.substring(0, url.length() - 1) : url;
     }
 
     @Override
